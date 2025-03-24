@@ -1,16 +1,18 @@
 import React from 'react'
-import { useRouter } from 'next/navigation'
 
-interface ButtonProps {
+interface SubmitButtonProps {
   buttonLabel: string
   onClick?: () => void
 }
 
-const Button: React.FC<ButtonProps> = ({ buttonLabel, onClick }) => {
+const SubmitButton: React.FC<SubmitButtonProps> = ({
+  buttonLabel,
+  onClick,
+}) => {
   return (
     <div>
       <button
-        type="button"
+        type="submit"
         className="h-[60px] w-[380px] bg-main-d-black rounded-[4px] text-white text-[18px] font-bold"
         onClick={onClick}
       >
@@ -20,4 +22,4 @@ const Button: React.FC<ButtonProps> = ({ buttonLabel, onClick }) => {
   )
 }
 
-export default Button
+export default SubmitButton

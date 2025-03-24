@@ -3,28 +3,46 @@
 import { useState } from 'react'
 import InputField from '../../_component/InputField'
 import { useRouter } from 'next/navigation'
-import Button from '@/app/_component/Button'
+import { useAuthStore } from '@/app/store/useAuthStore'
+import SubmitButton from '@/app/_component/SubmitButton'
+import { login } from '@/lib/api/auth'
 
 const LoginForm = () => {
+  const setUser = useAuthStore(state => state.setUser)
+
   const router = useRouter()
 
-  const [userId, setUserId] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    console.log({ userId, password }) // 폼 제출 시 최종 상태 출력
+
+    try {
+      const data = await login({ email, password })
+
+      // 예시: data 안에 email 있다고 가정
+      setUser({
+        email: data.email,
+        userName: data.userName,
+      })
+
+      router.push('/dashboard')
+    } catch (err) {
+      console.error(err)
+      alert('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.')
+    }
   }
 
   return (
     <form className="w-[380px]" onSubmit={handleSubmit}>
       <InputField
         label="아이디(교번)"
-        id="username"
-        name="username"
-        type="text"
+        id="email"
+        name="email"
+        type="email"
         placeholder="만나교회 교번 (ex.12345)"
-        onChange={e => setUserId(e.target.value)}
+        onChange={e => setEmail(e.target.value)}
       />
 
       <InputField
@@ -37,7 +55,7 @@ const LoginForm = () => {
       />
 
       <div>
-        <Button buttonLabel={'로그인'} movePage={'dashboard'} />
+        <SubmitButton buttonLabel={'로그인'} />
       </div>
     </form>
   )

@@ -3,9 +3,12 @@
 import React from 'react'
 import RedirectButton from '@/app/_component/RedirectButton'
 import GuideText from '@/app/(feat)/_component/GuideText'
+import { useAuthStore } from '@/app/store/useAuthStore'
 
 const DashboardPage = () => {
-  const userName = '장종호'
+  const user = useAuthStore(state => state.user)
+  console.log(user)
+
   const applicationDeadline = '02월 24일 (월)'
   const applicationDeadlineTime = '20:30'
   const announcementDate = '02월 24일 (월)'
@@ -18,7 +21,7 @@ const DashboardPage = () => {
         <div className="flex items-center justify-center">
           <div className="w-[800px]">
             <div className="flex flex-row text-[30px] mb-[26px]">
-              <h2 className="font-bold">{userName} 리더님,</h2> 안녕하세요
+              <h2 className="font-bold">{user?.email} 리더님,</h2> 안녕하세요
             </div>
 
             {/*박스 내부*/}

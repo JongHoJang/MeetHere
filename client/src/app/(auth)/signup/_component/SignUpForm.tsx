@@ -135,7 +135,10 @@ const SignUpForm = () => {
           </div>
         </div>
         <div className="flex justify-center items-center">
-          <Button buttonLabel={'회원가입 하기'} movePage={'login'} />
+          <Button
+            buttonLabel={'회원가입 하기'}
+            // onClick={() => router.push(`/dashboard}`)}
+          />
         </div>
       </form>
     </div>
