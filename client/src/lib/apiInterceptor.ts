@@ -38,8 +38,8 @@ export const attachInterceptors = (api: AxiosInstance) => {
         if (!refreshToken || !userId) {
           console.warn('리프레시 토큰 또는 유저 ID 없음 → 로그인 페이지 이동')
           localStorage.clear()
-          // console.log('💬 refreshToken:', refreshToken)
-          // console.log('💬 userId:', userId)
+          // console.log('refreshToken:', refreshToken)
+          // console.log('userId:', userId)
           alert('로그인화면으로 돌아갑니다')
           window.location.href = '/login'
           return
@@ -49,7 +49,7 @@ export const attachInterceptors = (api: AxiosInstance) => {
           const refreshToken = localStorage.getItem('refreshToken')
           const userId = localStorage.getItem('userId')
 
-          console.log('🔄 refresh-token 요청 보냄')
+          console.log('refresh-token 요청 보냄')
           const res = await axios.post(
             `${API_BASE_URL}/api/refresh-token`,
             { refreshToken },
