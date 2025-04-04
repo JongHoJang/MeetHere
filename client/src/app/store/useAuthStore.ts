@@ -1,28 +1,81 @@
-import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
+// zustand로 상태관리
 
-interface User {
-  email: string // 사용자 아이디
-  userName: string // 사용자 이름
-  // 여기에 email, role, accessToken 등도 추가 가능
-}
+import { create } from 'zustand'
 
 interface AuthState {
-  user: User | null // 현재 로그인한 사용자 정보
-  setUser: (user: User) => void // 로그인할 때 호출
-  clearUser: () => void // 로그아웃할 때 호출
+  isAuthenticated: boolean
+  userId: string | null
+  accessToken: string | null
+  refreshToken: string | null
+  userInfo: {
+    userName: string
+    status: string
+    roomName: string
+    useDate: string
+    applicationDeadline: string
+    announcementTime: string
+  } | null
+  login: (data: {
+    userId: string
+    accessToken: string
+    refreshToken: string
+  }) => void
+  setUserInfo: (info: AuthState['userInfo']) => void
+  logout: () => void
+  initializeAuth: () => void
 }
 
-// Zustand 스토어 생성
-export const useAuthStore = create(
-  persist<AuthState>(
-    set => ({
-      user: null,
-      setUser: user => set({ user }),
-      clearUser: () => set({ user: null }),
-    }),
-    {
-      name: 'auth-storage', // localStorage 키
+export const useAuthStore = create<AuthState>(set => ({
+  isAuthenticated: false,
+  userId: null,
+  accessToken: null,
+  refreshToken: null,
+  userInfo: null,
+
+  // 로그인 한 유저 정보
+  setUserInfo: info => set({ userInfo: info }),
+
+  // 로그인
+  login: ({ userId, accessToken, refreshToken }) => {
+    localStorage.setItem('userId', userId)
+    localStorage.setItem('accessToken', accessToken)
+    localStorage.setItem('refreshToken', refreshToken)
+
+    set({
+      isAuthenticated: true,
+      userId,
+      accessToken,
+      refreshToken,
+    })
+  },
+
+  // 로그아웃
+  logout: () => {
+    localStorage.clear()
+    set({
+      isAuthenticated: false,
+      userId: null,
+      accessToken: null,
+      refreshToken: null,
+    })
+  },
+
+  // localStorage에 저장된 토큰과 유저 정보를 꺼내서
+  // Zustand의 상태에 다시 넣어주는 역할이야
+  initializeAuth: () => {
+    const accessToken = localStorage.getItem('accessToken')
+    const refreshToken = localStorage.getItem('refreshToken')
+    const userId = localStorage.getItem('userId')
+    const userInfo = localStorage.getItem('userInfo')
+
+    if (accessToken && refreshToken && userId) {
+      set({
+        isAuthenticated: true,
+        accessToken,
+        refreshToken,
+        userId,
+        userInfo: userInfo ? JSON.parse(userInfo) : null,
+      })
     }
-  )
-)
+  },
+}))

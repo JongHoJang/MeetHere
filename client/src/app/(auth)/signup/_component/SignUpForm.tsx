@@ -4,6 +4,8 @@ import InputField from '@/app/(auth)/_component/InputField'
 import DropdownInputField from '@/app/(auth)/_component/DropDownInputField'
 import Button from '@/app/_component/Button'
 import { useState } from 'react'
+import { signup } from '@/lib/auth'
+import { useRouter } from 'next/navigation'
 
 const SignUpForm = () => {
   const [username, setUsername] = useState('')
@@ -26,11 +28,31 @@ const SignUpForm = () => {
     if (name === 'confirmPassword') setConfirmPassword(value)
     if (name === 'community') setCommunity(value)
   }
+  const router = useRouter()
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    // 서버로 보내기
+    if (password !== confirmPassword) {
+      alert('비밀번호가 일치하지 않습니다.')
+      return
+    }
+
+    try {
+      const data = await signup({
+        name: username,
+        birthday: dob,
+        churchMemberId: Number(memberId),
+        email: userId,
+        password,
+        communityCode: community,
+      })
+
+      router.push('/login')
+    } catch (err) {
+      console.error(err)
+      alert('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.')
+    }
 
     console.log({
       username,
@@ -64,8 +86,8 @@ const SignUpForm = () => {
                 id="dob"
                 name="dob"
                 type="date"
-                placeholder="생년월일을 입력하세요"
-                defaultValue="1994-01-01"
+                // value={dob}
+                placeholder="생년월일"
                 onChange={handleInputChange}
               />
             </div>
@@ -97,7 +119,7 @@ const SignUpForm = () => {
                 label="비밀번호"
                 id="password"
                 name="password"
-                type="string"
+                type="password"
                 placeholder="비밀번호를 입력하세요"
                 onChange={handleInputChange}
               />
@@ -107,7 +129,7 @@ const SignUpForm = () => {
                 label="비밀번호 확인"
                 id="confirmPassword"
                 name="confirmPassword"
-                type="string"
+                type="password"
                 placeholder="비밀번호를 다시 입력하세요"
                 onChange={handleInputChange}
               />
@@ -119,6 +141,7 @@ const SignUpForm = () => {
               label="공동체"
               id="community"
               name="community"
+              // value={community}
               placeholder="공동체를 선택하세요"
               onChange={handleInputChange}
               className="w-full"
@@ -135,10 +158,7 @@ const SignUpForm = () => {
           </div>
         </div>
         <div className="flex justify-center items-center">
-          <Button
-            buttonLabel={'회원가입 하기'}
-            // onClick={() => router.push(`/dashboard}`)}
-          />
+          <Button type="submit" buttonLabel="회원가입 하기" />
         </div>
       </form>
     </div>

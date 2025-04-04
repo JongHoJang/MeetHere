@@ -1,8 +1,5 @@
 import React from 'react'
-import InputField from '@/app/(auth)/_component/InputField'
-import DropdownInputField from '@/app/(auth)/_component/DropDownInputField'
 import SignUpForm from '@/app/(auth)/signup/_component/SignUpForm'
-import Button from '@/app/_component/Button'
 
 const SignUpPage = () => {
   return (
