@@ -6,14 +6,8 @@ import GuideText from '@/app/(feat)/_component/GuideText'
 import { useAuthStore } from '@/app/store/useAuthStore'
 
 const DashboardPage = () => {
-  const user = useAuthStore(state => state.user)
-  console.log(user)
-
-  const applicationDeadline = '02월 24일 (월)'
-  const applicationDeadlineTime = '20:30'
-  const announcementDate = '02월 24일 (월)'
-  const announcementTime = '21:00'
-  const usageDate = '03월 02일 (주일)'
+  // const user = useAuthStore(state => state.userId)
+  const userInfo = useAuthStore(state => state.userInfo)
 
   return (
     <div className="flex flex-col items-center justify-center mb-24 w-full">
@@ -21,7 +15,16 @@ const DashboardPage = () => {
         <div className="flex items-center justify-center">
           <div className="w-[800px]">
             <div className="flex flex-row text-[30px] mb-[26px]">
-              <h2 className="font-bold">{user?.email} 리더님,</h2> 안녕하세요
+              <h1 className="font-semibold flex items-center">
+                {userInfo ? (
+                  <span className="w-[100px]">{userInfo.userName}</span>
+                ) : (
+                  <div className="w-[100px] h-8  animate-pulse rounded-md" />
+                )}
+              </h1>
+              <h1>
+                <span className="font-semibold">리더님,</span> 환영합니다 👋
+              </h1>
             </div>
 
             {/*박스 내부*/}
@@ -30,33 +33,26 @@ const DashboardPage = () => {
                 <div className="flex flex-row gap-20 mb-[30px]">
                   <div>
                     <div className="font-bold text-[14px]">신청 마감</div>
-                    {/*<div className="bg-red-300 p-3 rounded-[4px]">*/}
-                    <div>{applicationDeadline}</div>
-                    <div>{applicationDeadlineTime}</div>
-                    {/*</div>*/}
+                    {userInfo?.applicationDeadline.split('T')[0]}
+                    <br />
+                    {userInfo?.applicationDeadline.split('T')[1]}
                   </div>
                   <div>
                     <div className="font-bold text-[14px]">발표 일시</div>
-                    {/*<div className="bg-red-300 p-3 rounded-[4px]">*/}
-                    <div>{announcementDate}</div>
-                    <div>{announcementTime}</div>
-                    {/*</div>*/}
+                    {userInfo?.announcementTime.split('T')[0]}
+                    <br />
+                    {userInfo?.announcementTime.split('T')[1]}
                   </div>
                   <div>
                     <div className="font-bold text-[14px]">사용일</div>
-                    {/*<div className="bg-red-300 p-3 rounded-[4px]">*/}
-                    <div>{usageDate}</div>
+                    <div>{userInfo?.useDate}</div>
                     <div>나무모임 시간</div>
-                    {/*</div>*/}
                   </div>
                 </div>
                 <hr className="border-t border-gray-300  mb-[30px]" />
                 <div>
-                  <div className="font-bold text-[14px]">신청 마감</div>
-                  <div>
-                    아직 소그룹실을 신청하지 않으셨네요! <br />
-                    원하는 소그룹실을 선택해주세요.
-                  </div>
+                  <div className="font-bold text-[14px]">신청 내역</div>
+                  <div>{userInfo?.status}</div>
                 </div>
               </div>
               <GuideText />

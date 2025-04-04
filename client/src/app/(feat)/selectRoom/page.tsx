@@ -1,27 +1,49 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import GuideText from '@/app/(feat)/_component/GuideText'
-import SelectRoomContainer from '@/app/(feat)/selectRoom/_component/SelectRoomContainer'
+import RoomListContainer from '@/app/(feat)/selectRoom/_component/RoomListContainer'
 import Button from '@/app/_component/Button'
 import Modal from '@/app/_component/ModalPage'
 import { useRouter } from 'next/navigation'
 import SuccessModalContent from '@/app/_component/SuccessModalContent'
-
-const userName = '장종호'
+import { useAuthStore } from '@/app/store/useAuthStore'
+import { Room } from '@/types/room'
+import { fetchRoomInfo } from '@/lib/api/roomController'
 
 const SelectRoomPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [roomList, setRoomList] = useState<Room[]>([])
+  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null)
 
-  const router = useRouter()
+  const userId = useAuthStore(state => state.userId)
 
-  // 어플라이 함수
-  const handleApply = () => {
-    // TODO: 신청 API 호출 등
-    setIsModalOpen(true)
-  }
+  const userInfo = useAuthStore(state => state.userInfo)
 
-  // 팝업 확인 버튼
+  // const router = useRouter()
+  useEffect(() => {
+    const loadRooms = async () => {
+      if (!userId) return
+
+      try {
+        const data = await fetchRoomInfo(userId)
+        // console.log(userId)
+
+        setRoomList(data)
+      } catch (e) {
+        console.error('방 목록 불러오기 실패', e)
+      }
+    }
+
+    loadRooms()
+  }, [userId])
+
+  // 신청하기 버튼 함수
+  // const handleApply = () => {
+  //   // TODO: 신청 API 호출 등
+  //   setIsModalOpen(true)
+  // }
+  console.log(selectedRoom)
 
   return (
     <div className="flex flex-col items-center justify-center mb-24 w-full">
@@ -29,8 +51,17 @@ const SelectRoomPage = () => {
         <div className="flex items-center justify-center">
           <div className="w-[800px]">
             <div className="flex flex-row text-[30px] mb-[26px]">
-              <h2 className="font-bold">{userName} 리더님,</h2>&nbsp; 소그룹실을
-              신청해주세요
+              <h1 className="font-semibold flex items-center">
+                {userInfo ? (
+                  <span className="w-[100px]">{userInfo.userName}</span>
+                ) : (
+                  <div className="w-[100px] h-8  animate-pulse rounded-md" />
+                )}
+              </h1>
+              <h1>
+                <span className="font-semibold">리더님,</span> 소그룹실을
+                신청해주세요 👋
+              </h1>
             </div>
 
             {/*박스*/}
@@ -40,7 +71,10 @@ const SelectRoomPage = () => {
                   소그룹실 선택
                 </div>
                 <div className="w-full bg-white p-5 rounded-[4px] mb-[10px]">
-                  <SelectRoomContainer />
+                  <RoomListContainer
+                    rooms={roomList}
+                    setSelectedRoom={setSelectedRoom}
+                  />
                 </div>
               </div>
               {/* 박스 외부*/}
@@ -50,7 +84,7 @@ const SelectRoomPage = () => {
         </div>
       </div>
       <div className="mt-12">
-        <Button buttonLabel={'신청하기'} onClick={handleApply} />
+        <Button buttonLabel={'신청하기'} />
       </div>
 
       {/* 모달 */}

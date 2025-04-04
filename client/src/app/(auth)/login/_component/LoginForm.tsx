@@ -5,12 +5,12 @@ import InputField from '../../_component/InputField'
 import { useRouter } from 'next/navigation'
 import { useAuthStore } from '@/app/store/useAuthStore'
 import SubmitButton from '@/app/_component/SubmitButton'
-import { login } from '@/lib/api/auth'
+import { login } from '@/lib/auth'
+import { fetchUserUsage } from '@/lib/api/user'
 
 const LoginForm = () => {
-  const setUser = useAuthStore(state => state.setUser)
-
   const router = useRouter()
+  const { login: setAuth, setUserInfo } = useAuthStore()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -19,13 +19,19 @@ const LoginForm = () => {
     e.preventDefault()
 
     try {
-      const data = await login({ email, password })
-
-      // 예시: data 안에 email 있다고 가정
-      setUser({
-        email: data.email,
-        userName: data.userName,
+      // 로그인 요청
+      const { accessToken, refreshToken, userId } = await login({
+        email,
+        password,
       })
+
+      // 로그인 상태 저장
+      setAuth({ userId: String(userId), accessToken, refreshToken })
+
+      // 사용자 정보 가져와서 저장
+      const userInfo = await fetchUserUsage(userId)
+      setUserInfo(userInfo)
+      localStorage.setItem('userInfo', JSON.stringify(userInfo))
 
       router.push('/dashboard')
     } catch (err) {
@@ -33,7 +39,6 @@ const LoginForm = () => {
       alert('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.')
     }
   }
-
   return (
     <form className="w-[380px]" onSubmit={handleSubmit}>
       <InputField
