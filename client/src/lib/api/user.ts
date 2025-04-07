@@ -3,11 +3,7 @@
 import { api } from '../axios'
 
 export const fetchUserUsage = async (userId: string) => {
-  const res = await api.get('/api/user/usage', {
-    headers: {
-      'User-ID': userId,
-    },
-  })
+  const res = await api.get('/api/user/usage')
   return res.data
 }
 
