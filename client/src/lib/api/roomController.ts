@@ -5,28 +5,13 @@ const accessToken = useAuthStore.getState().accessToken
 
 // 방 정보 api
 export const fetchRoomInfo = async (userId: string) => {
-  const accessToken = useAuthStore.getState().accessToken
-
-  const res = await api.get('/api/room/reservation/info', {
-    headers: {
-      'User-ID': userId,
-      // Authorization: `Bearer ${accessToken}`,
-      // withCredentials: true,
-    },
-  })
-
+  const res = await api.get('/api/room/reservation/info')
   return res.data
 }
 
 // 이번주에 당첨된 사람들 리스트 api
 export const usingRoomUserList = async (userId: string) => {
-  const res = await api.get('/api/room/users', {
-    headers: {
-      'User-ID': userId,
-      Authorization: `Bearer ${accessToken}`,
-    },
-  })
-
+  const res = await api.get('/api/room/users')
   return res.data
 }
 
@@ -34,7 +19,6 @@ export const usingRoomUserList = async (userId: string) => {
 export const reservationRoom = async (userId: string, roomId: number) => {
   const res = await api.get('/api/room/reserve', {
     headers: {
-      'User-ID': userId,
       roomId: roomId,
       Authorization: `Bearer ${accessToken}`,
     },
