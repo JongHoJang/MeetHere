@@ -2,12 +2,13 @@
 
 import { api } from '../axios'
 
-export const fetchUserUsage = async (userId: string) => {
+export const fetchUserUsage = async () => {
   const res = await api.get('/api/user/usage')
   return res.data
 }
 
 //  "userName": "string",
+// "applicationStartTime": "2025-04-07T10:31:15.589Z",
 //  "applicationDeadline": "2025-04-01T23:52:00.247Z",
 //  "announcementTime": "2025-04-01T23:52:00.247Z",
 //  "useDate": "2025-04-01",

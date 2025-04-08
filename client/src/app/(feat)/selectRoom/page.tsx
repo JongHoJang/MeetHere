@@ -3,9 +3,8 @@
 import React, { useEffect, useState } from 'react'
 import GuideText from '@/app/(feat)/_component/GuideText'
 import RoomListContainer from '@/app/(feat)/selectRoom/_component/RoomListContainer'
-import Button from '@/app/_component/Button'
+import Button from '@/app/_component/ReserveButton'
 import Modal from '@/app/_component/ModalPage'
-import { useRouter } from 'next/navigation'
 import SuccessModalContent from '@/app/_component/SuccessModalContent'
 import { useAuthStore } from '@/app/store/useAuthStore'
 import { Room } from '@/types/room'
@@ -26,18 +25,19 @@ const SelectRoomPage = () => {
       if (!userId) return
 
       try {
-        const data = await fetchRoomInfo(userId)
-        // console.log(userId)
-
+        const data = await fetchRoomInfo()
         setRoomList(data)
       } catch (e) {
         console.error('방 목록 불러오기 실패', e)
       }
     }
 
-    loadRooms()
+    loadRooms().catch(e => {
+      console.error('loadRooms() 실행 중 오류 발생:', e)
+    })
   }, [userId])
 
+  // console.log(roomList)
   // 신청하기 버튼 함수
   // const handleApply = () => {
   //   // TODO: 신청 API 호출 등
@@ -74,6 +74,7 @@ const SelectRoomPage = () => {
                   <RoomListContainer
                     rooms={roomList}
                     setSelectedRoom={setSelectedRoom}
+                    selectedRoom={selectedRoom}
                   />
                 </div>
               </div>
@@ -84,7 +85,7 @@ const SelectRoomPage = () => {
         </div>
       </div>
       <div className="mt-12">
-        <Button buttonLabel={'신청하기'} />
+        <Button buttonLabel={'신청하기'} roomId={selectedRoom?.roomId} />
       </div>
 
       {/* 모달 */}
