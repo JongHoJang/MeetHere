@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import { useState } from 'react'
 import InputField from '../../_component/InputField'
 import { useRouter } from 'next/navigation'
@@ -29,7 +30,7 @@ const LoginForm = () => {
       setAuth({ userId: String(userId), accessToken, refreshToken })
 
       // 사용자 정보 가져와서 저장
-      const userInfo = await fetchUserUsage(userId)
+      const userInfo = await fetchUserUsage()
       setUserInfo(userInfo)
       localStorage.setItem('userInfo', JSON.stringify(userInfo))
 

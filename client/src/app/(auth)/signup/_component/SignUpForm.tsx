@@ -1,8 +1,9 @@
 'use client'
 
+import React from 'react'
 import InputField from '@/app/(auth)/_component/InputField'
 import DropdownInputField from '@/app/(auth)/_component/DropDownInputField'
-import Button from '@/app/_component/Button'
+import Button from '@/app/_component/ReserveButton'
 import { useState } from 'react'
 import { signup } from '@/lib/auth'
 import { useRouter } from 'next/navigation'
@@ -39,7 +40,7 @@ const SignUpForm = () => {
     }
 
     try {
-      const data = await signup({
+      await signup({
         name: username,
         birthday: dob,
         churchMemberId: Number(memberId),
@@ -54,15 +55,15 @@ const SignUpForm = () => {
       alert('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.')
     }
 
-    console.log({
-      username,
-      password,
-      confirmPassword,
-      dob,
-      memberId,
-      userId,
-      community,
-    })
+    // console.log({
+    //   username,
+    //   password,
+    //   confirmPassword,
+    //   dob,
+    //   memberId,
+    //   userId,
+    //   community,
+    // })
   }
   return (
     <div className="flex flex-col w-[600px] justify-center items-center">
