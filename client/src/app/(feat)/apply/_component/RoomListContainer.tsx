@@ -1,6 +1,6 @@
 import React from 'react'
 import { Room } from '@/types/room'
-import RoomCard from '@/app/(feat)/selectRoom/_component/RoomCard'
+import RoomCard from '@/app/(feat)/apply/_component/RoomCard'
 import { Dispatch, SetStateAction } from 'react'
 
 interface RoomListContainerProps {

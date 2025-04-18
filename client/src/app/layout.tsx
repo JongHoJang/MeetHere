@@ -1,7 +1,9 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
-import AuthInitializer from '@/app/_component/AuthInitializer'
+// import Header from '@/app/(feat)/_component/Header'
+import Footer from '@/app/_component/Footer'
+import FeatHeader from '@/app/_component/Header'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -18,18 +20,19 @@ export const metadata: Metadata = {
   description: '만나교회 청년부 소그룹실 예약 시스템입니다.',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
   return (
     <html lang="en">
-      <AuthInitializer />
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <FeatHeader />
         {children}
+        <Footer />
       </body>
     </html>
   )
