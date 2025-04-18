@@ -1,14 +1,15 @@
 'use client'
 
 import React from 'react'
-import RedirectButton from '@/app/_component/button/RedirectButton'
 import GuideText from '@/app/(feat)/_component/GuideText'
 import { useUserStore } from '@/store/useUserStore'
+import { useRouter } from 'next/navigation'
 
 const Skeleton = ({ className }: { className?: string }) => (
   <div className={`animate-pulse bg-gray-200 rounded ${className}`} />
 )
 
+// 상태에 따른 메시지 분기처리
 const getStatusMessage = (
   status: string | undefined,
   roomName: string | undefined
@@ -34,14 +35,49 @@ const getStatusMessage = (
         </>
       )
     case 'LOSER':
-      return '아쉽게도 이번에는 당첨되지 않았습니다. 다음 기회를 노려보세요! 💪'
+      return '아쉽게도 이번에는 당첨되지 않았습니다. 다음 기회를 노려보세 요! 💪'
     default:
       return '신청 상태를 불러오는 중입니다...'
   }
 }
 
+// 상태에 따른 버튼 분기 처리
+const getButtonProps = (status: string | undefined) => {
+  switch (status) {
+    case 'BEFORE_APPLICATION':
+      return {
+        label: '신청하러 가기',
+        path: '/apply',
+        disabled: false,
+      }
+    case 'AFTER_APPLICATION':
+      return {
+        label: '신청현황 보러가기',
+        path: '/application-overview',
+        disabled: false,
+      }
+    case 'NOT_APPLIED':
+    case 'WINNER':
+    case 'LOSER':
+      return {
+        label: '신청하러 가기',
+        path: '/apply',
+        disabled: true,
+      }
+    default:
+      return {
+        label: '로딩 중...',
+        path: '',
+        disabled: true,
+      }
+  }
+}
+
 const MainClient = () => {
   const { userInfo } = useUserStore()
+  const router = useRouter()
+
+  const { label, path, disabled } = getButtonProps(userInfo?.status)
 
   return (
     <div className="flex flex-col items-center justify-center mb-24 w-full">
@@ -53,7 +89,6 @@ const MainClient = () => {
                 {userInfo ? (
                   <span className="w-[100px]">{userInfo.userName}</span>
                 ) : (
-                  // <div className="w-[100px] h-8  animate-pulse rounded-md" />
                   <Skeleton className="w-[120px] h-8" />
                 )}
               </h1>
@@ -142,13 +177,37 @@ const MainClient = () => {
                   .split(':')
                   .slice(0, 2)
                   .join(':')}
+                announcementTime={userInfo?.announcementTime
+                  .split('T')[1]
+                  .split(':')
+                  .slice(0, 2)
+                  .join(':')}
               />
             </div>
           </div>
         </div>
       </div>
-      <div className="mt-12">
-        <RedirectButton buttonLabel={'신청하러 가기'} movePage={'/apply'} />
+      <div className="flex gap-10 mt-12">
+        <button
+          disabled={disabled}
+          onClick={() => {
+            if (!disabled) router.push(path)
+          }}
+          className={`h-[60px] w-[380px] rounded-[4px] text-white text-[18px] font-bold transition-colors duration-200 ${
+            disabled
+              ? 'bg-gray-400 cursor-not-allowed'
+              : 'bg-main-d-black hover:bg-[#444]'
+          }`}
+        >
+          {label}
+        </button>
+
+        <button
+          className={`h-[60px] w-[120px] rounded-[4px] text-white text-[18px] font-bold transition-colors duration-200 bg-main-d-black hover:bg-[#444]`}
+          onClick={() => router.push('/check-winner')}
+        >
+          당첨자 확인
+        </button>
       </div>
     </div>
   )

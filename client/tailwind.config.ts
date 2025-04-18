@@ -32,6 +32,9 @@ export default {
     width: {
       'web-main': '1140px', // 웹 메인컨텐츠 영역
     },
+    maxWidth: {
+      'web-main': '1140px',
+    },
   },
   plugins: [],
 } satisfies Config
