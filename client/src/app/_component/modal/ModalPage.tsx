@@ -15,8 +15,8 @@ export default function Modal({ open, onClose, children }: ModalProps) {
       onClick={onClose}
     >
       <div
-        className="bg-white p-6 rounded shadow-md w-80"
-        onClick={e => e.stopPropagation()} // 내부 클릭 시 닫기 방지
+        className="bg-white p-6 rounded shadow-md w-[512px] h-[226px]"
+        onClick={e => e.stopPropagation()}
       >
         {children}
       </div>

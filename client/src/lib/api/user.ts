@@ -1,10 +1,16 @@
-// 로그인한 유저 정보 api
+// // 유저 관련 api
 
-import { api } from '../axios'
+// 로그인 한 유저 정보
+import api from '@/lib/api/axios'
 
-export const fetchUserUsage = async () => {
-  const res = await api.get('/api/user/usage')
-  return res.data
+export const getUserUsage = async () => {
+  try {
+    const res = await api.get('/api/user/usage')
+    return res.data
+  } catch (err) {
+    console.error('사용자 정보 불러오기 실패:', err)
+    return null
+  }
 }
 
 //  "userName": "string",
