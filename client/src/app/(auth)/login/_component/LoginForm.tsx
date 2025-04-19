@@ -6,6 +6,7 @@ import SubmitButton from '@/app/_component/button/SubmitButton'
 import { login } from '@/lib/api/auth'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/store/useUserStore'
+import { deleteCookie } from 'cookies-next'
 
 const LoginForm = () => {
   const [email, setEmail] = useState('')
@@ -18,6 +19,7 @@ const LoginForm = () => {
   useEffect(() => {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
+    deleteCookie('accessToken', { path: '/' })
     clearUserInfo()
   }, [])
 
