@@ -1,53 +1,53 @@
 'use client'
 
-import React from 'react'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import InputField from '../../_component/InputField'
+import SubmitButton from '@/app/_component/button/SubmitButton'
+import { login } from '@/lib/api/auth'
 import { useRouter } from 'next/navigation'
-import { useAuthStore } from '@/app/store/useAuthStore'
-import SubmitButton from '@/app/_component/SubmitButton'
-import { login } from '@/lib/auth'
-import { fetchUserUsage } from '@/lib/api/user'
+import { useUserStore } from '@/store/useUserStore'
 
 const LoginForm = () => {
-  const router = useRouter()
-  const { login: setAuth, setUserInfo } = useAuthStore()
-
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const router = useRouter()
+
+  const { clearUserInfo } = useUserStore()
+
+  // 로그인화면 진입 시, 로그아웃 로직 실행
+  useEffect(() => {
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
+    clearUserInfo()
+  }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
     try {
-      // 로그인 요청
-      const { accessToken, refreshToken, userId } = await login({
-        email,
-        password,
-      })
-
-      // 로그인 상태 저장
-      setAuth({ userId: String(userId), accessToken, refreshToken })
-
-      // 사용자 정보 가져와서 저장
-      const userInfo = await fetchUserUsage()
-      setUserInfo(userInfo)
-      localStorage.setItem('userInfo', JSON.stringify(userInfo))
-
-      router.push('/dashboard')
+      const result = await login({ email, password })
+      if (result.success) {
+        router.push('/main')
+      } else {
+        alert(result.error || '로그인에 실패했습니다.')
+      }
     } catch (err) {
-      console.error(err)
-      alert('로그인에 실패했습니다. 아이디와 비밀번호를 확인해주세요.')
+      if (err instanceof Error) {
+        alert(err.message)
+      } else {
+        alert('로그인 중 오류 발생')
+      }
     }
   }
+
   return (
     <form className="w-[380px]" onSubmit={handleSubmit}>
       <InputField
-        label="아이디(교번)"
+        label="이메일(아이디)"
         id="email"
         name="email"
         type="email"
-        placeholder="만나교회 교번 (ex.12345)"
+        placeholder="이메일을 입력해주세요."
         onChange={e => setEmail(e.target.value)}
       />
 
@@ -56,11 +56,11 @@ const LoginForm = () => {
         id="password"
         name="password"
         type="password"
-        placeholder="8자 이상의 비밀번호"
+        placeholder="비밀번호를 입력해주세요."
         onChange={e => setPassword(e.target.value)}
       />
 
-      <div>
+      <div className="mt-8">
         <SubmitButton buttonLabel={'로그인'} />
       </div>
     </form>

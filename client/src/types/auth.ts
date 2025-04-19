@@ -1,20 +1,18 @@
-type Community =
-  | '요셉'
-  | '다윗'
-  | '에스더'
-  | '여호수아'
-  | '다니엘'
-  | '모세'
-  | '쁘아'
-
 export interface LoginForm {
   email: string
   password: string
 }
 
-export interface SignUpForm extends LoginForm {
-  name: string
-  birthDate: string
-  teacherId: string
-  community: Community
+export interface UserInfo {
+  userName: string
+  applicationDeadline: string
+  announcementTime: string
+  useDate: string
+  status: 'BEFORE_APPLICATION' | 'AFTER_APPLICATION' | 'APPROVED' | 'REJECTED'
+  roomName: string | undefined
+}
+
+export interface UserContextType extends UserInfo {
+  accessToken?: string
+  setAccessToken?: (token: string) => void
 }
