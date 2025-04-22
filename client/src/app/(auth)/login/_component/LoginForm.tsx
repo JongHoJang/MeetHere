@@ -43,7 +43,7 @@ const LoginForm = () => {
   }
 
   return (
-    <form className="w-[380px]" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <InputField
         label="이메일(아이디)"
         id="email"

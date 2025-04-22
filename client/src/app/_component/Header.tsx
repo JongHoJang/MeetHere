@@ -4,14 +4,14 @@ import React from 'react'
 import LogoutButton from '@/app/_component/button/LogoutButton'
 import { useUserStore } from '@/store/useUserStore'
 
-const FeatHeader = () => {
+const Header = () => {
   const { userInfo } = useUserStore()
 
   const isLoggedIn = !!userInfo?.userName
 
   return (
-    <header className="h-20 bg-[#333] flex justify-center items-center">
-      <div className="w-web-main h-full items-center justify-between flex flex-row px-4">
+    <header className="w-full bg-[#333] text-white z-50">
+      <div className="flex flex-row max-w-web-main mx-auto items-center justify-between gap-2 sm:py-5 py-3 px-4">
         <div
           onClick={() => {
             if (isLoggedIn) {
@@ -32,4 +32,4 @@ const FeatHeader = () => {
   )
 }
 
-export default FeatHeader
+export default Header

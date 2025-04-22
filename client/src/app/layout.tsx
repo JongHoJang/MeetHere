@@ -1,10 +1,9 @@
 import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
-// import Header from '@/app/(feat)/_component/Header'
 import Footer from '@/app/_component/Footer'
-import FeatHeader from '@/app/_component/Header'
 import { pretendard } from '@/app/_fonts/pretendard'
+import Header from '@/app/_component/Header'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -29,10 +28,10 @@ export default async function RootLayout({
   return (
     <html lang="ko" className={pretendard.className}>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-pretendard`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased font-pretendard min-h-screen flex flex-col`}
       >
-        <FeatHeader />
-        {children}
+        <Header />
+        <main className="flex-grow">{children}</main>
         <Footer />
       </body>
     </html>

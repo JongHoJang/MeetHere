@@ -12,17 +12,13 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
   disabled = false,
 }) => {
   return (
-    <div>
+    <div className="flex flex-col mb-5 bg-blue-300">
       <button
         type="submit"
         onClick={onClick}
         disabled={disabled}
-        className={`h-[60px] w-[380px] rounded-[4px] text-white text-[18px] font-bold transition-colors duration-200 
-    ${
-      disabled
-        ? 'bg-gray-300 cursor-not-allowed'
-        : 'bg-main-d-black hover:bg-[#444]'
-    }
+        className={`w-full h-[60px] rounded-[4px] text-white text-[18px] font-bold transition-colors duration-200 bg-main-d-black 
+    ${disabled ? 'opacity-40 cursor-not-allowed' : 'hover:bg-[#444]'}
   `}
       >
         {buttonLabel}
