@@ -14,19 +14,22 @@ export default function SuccessModalContent({ onClose, roomName }: Props) {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <h2 className="text-lg font-bold mb-2">
+    <div className="text-center">
+      <h2 className="text-xl font-bold mb-6">
         {roomName}에 신청이 완료되었습니다.
       </h2>
-      <p className="mb-4">월요일 21:00에 배정이 완료됩니다.</p>
-
-      <button
-        type="button"
-        className="h-[30px] w-[150px] bg-main-d-black rounded-[4px] text-white text-sm font-bold"
-        onClick={handleConfirm}
-      >
-        확인
-      </button>
+      <div className="mb-4 text-center w-[320px]">
+        <p className="mb-4">월요일 21:00에 배정이 완료됩니다.</p>
+      </div>
+      <div className="w-full max-w-[300px] mx-auto">
+        <button
+          type="button"
+          className="w-full h-[60px] bg-main-d-black rounded-[4px] text-white text-sm font-bold hover:bg-[#444]"
+          onClick={handleConfirm}
+        >
+          확인
+        </button>
+      </div>
     </div>
   )
 }

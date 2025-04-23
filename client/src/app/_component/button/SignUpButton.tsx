@@ -1,4 +1,3 @@
-// SignUpButton.tsx
 import React from 'react'
 
 interface SignupButtonProps {
@@ -13,10 +12,12 @@ const SignUpButton: React.FC<SignupButtonProps> = ({
   onClick,
 }) => {
   return (
-    <div>
+    <div className="flex flex-col mb-5">
       <button
         type={type}
-        className="h-[60px] w-[380px] bg-main-d-black hover:bg-[#444] rounded-[4px] text-white text-[18px] font-bold transition-colors duration-200"
+        className={`w-full h-[60px] rounded-[4px] text-white text-[18px] font-bold transition-colors duration-200
+  bg-main-d-black 
+  hover:bg-[#444]`}
         onClick={onClick}
       >
         {buttonLabel}

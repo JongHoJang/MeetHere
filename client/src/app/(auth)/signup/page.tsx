@@ -3,17 +3,16 @@ import SignUpForm from '@/app/(auth)/signup/_component/SignUpForm'
 
 const SignUpPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center mb-24 w-full">
-      <div className="w-web-main p-4">
-        <div className="mb-[60px]">
-          <h2 className="text-4xl font-bold">회원가입</h2>
-          {/*<h3 className="text-xl font-medium">*/}
-          {/*  가입을 위한 정보를 입력해주세요.*/}
-          {/*</h3>*/}
-        </div>
-        <div>
-          <div className="flex items-center justify-center">
-            <SignUpForm />
+    <div className="pt-10 pb-10 md:pb-20">
+      <div className="mx-auto w-full max-w-[1140]">
+        <div className="px-4 md:px-0 pb-4">
+          <div className="mb-8 md:mb-12">
+            <h2 className="text-2xl md:text-4xl font-bold">회원가입</h2>
+          </div>
+          <div>
+            <div className="flex items-center justify-center">
+              <SignUpForm />
+            </div>
           </div>
         </div>
       </div>

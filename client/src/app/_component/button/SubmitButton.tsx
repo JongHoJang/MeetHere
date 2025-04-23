@@ -12,7 +12,7 @@ const SubmitButton: React.FC<SubmitButtonProps> = ({
   disabled = false,
 }) => {
   return (
-    <div className="flex flex-col mb-5 bg-blue-300">
+    <div className="flex flex-col mb-5">
       <button
         type="submit"
         onClick={onClick}

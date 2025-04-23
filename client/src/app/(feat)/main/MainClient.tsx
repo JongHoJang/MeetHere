@@ -5,10 +5,6 @@ import GuideText from '@/app/(feat)/_component/GuideText'
 import { useUserStore } from '@/store/useUserStore'
 import { useRouter } from 'next/navigation'
 
-const Skeleton = ({ className }: { className?: string }) => (
-  <div className={`animate-pulse bg-gray-200 rounded ${className}`} />
-)
-
 // 상태에 따른 메시지 분기처리
 const getStatusMessage = (
   status: string | undefined,
@@ -80,7 +76,7 @@ const MainClient = () => {
   const { label, path, disabled } = getButtonProps(userInfo?.status)
 
   return (
-    <div className="py-10">
+    <div className="pt-10 pb-20">
       {/*타이틀 + 박스*/}
       <div className="mx-auto w-full max-w-[800px]">
         <div className="px-4 md:px-0 pb-4">
@@ -135,15 +131,11 @@ const MainClient = () => {
                         </span>
                       </span>
                       <span className="inline-block w-full md:w-[150px]">
-                        {userInfo ? (
-                          userInfo.announcementTime
-                            .split('T')[1]
-                            .split(':')
-                            .slice(0, 2)
-                            .join(':')
-                        ) : (
-                          <Skeleton className="w-[60px] h-5" />
-                        )}
+                        {userInfo?.announcementTime
+                          .split('T')[1]
+                          .split(':')
+                          .slice(0, 2)
+                          .join(':')}
                       </span>
                     </div>
                   </div>
@@ -205,7 +197,7 @@ const MainClient = () => {
           </div>
         </div>
       </div>
-      <div className="flex gap-4 md:gap-10 mt-5 md:mt-12 md:pb-40 pb-10 items-center justify-center px-4 md:px-0">
+      <div className="flex gap-4 md:gap-10 mt-5 md:mt-12 md:pb-40 items-center justify-center px-4 md:px-0">
         <button
           disabled={disabled}
           onClick={() => {
