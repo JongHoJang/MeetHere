@@ -53,7 +53,7 @@ const ApplicationOverview = () => {
           </div>
         </div>
       </div>
-      <div className="mt-10 mb-10 w-full max-w-[380px] mx-auto md:px-0">
+      <div className="mt-12 mb-10 w-full max-w-[380px] mx-auto px-4 sm:px-0">
         <SubmitButton
           onClick={() => router.push('main')}
           buttonLabel={'돌아가기'}

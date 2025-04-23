@@ -44,7 +44,7 @@ const CheckWinnerClient = () => {
 
           {/* 당첨 박스 */}
           <div>
-            <div className=" w-full bg-[#f5f5f5] p-10 rounded-[4px] mb-[10px]">
+            <div className=" w-full bg-[#f5f5f5] px-4 py-6 md:p-10 rounded-[4px] mb-[10px]">
               <div className="flex justify-center items-center font-semibold text-[18px] mb-6">
                 당첨자 확인
               </div>
@@ -84,7 +84,7 @@ const CheckWinnerClient = () => {
               </div>
             </div>
           </div>
-          <div className="w-full flex justify-center mt-10">
+          <div className="mt-12 mb-10 w-full max-w-[380px] mx-auto px-4 sm:px-0">
             <SignUpButton
               buttonLabel={'돌아가기'}
               onClick={() => router.push('/main')}
