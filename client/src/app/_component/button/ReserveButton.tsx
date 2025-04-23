@@ -43,10 +43,10 @@ const ReserveButton: React.FC<ReserveButtonProps> = ({
   }
 
   return (
-    <div>
+    <div className="flex flex-col mb-5">
       <button
         type="button"
-        className="h-[60px] w-[380px] bg-main-d-black rounded-[4px] text-white text-[18px] font-bold transition-colors duration-200 hover:bg-[#444]"
+        className="w-full h-[60px] rounded-[4px] flex items-center justify-center text-white text-[18px] font-bold transition-colors duration-200 bg-main-d-black disabled:bg-[#888]"
         disabled={!roomId || isLoading}
         onClick={() => handleReserve(roomId!)}
       >

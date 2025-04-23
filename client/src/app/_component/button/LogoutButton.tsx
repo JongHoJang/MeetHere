@@ -1,18 +1,28 @@
+'use client'
+
 import { useRouter } from 'next/navigation'
+import { deleteCookie } from 'cookies-next'
+import { LogOut } from 'lucide-react'
 
 const LogoutButton = () => {
   const router = useRouter()
 
   const handleLogout = () => {
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
+    deleteCookie('accessToken', { path: '/' })
     router.push('/login')
   }
 
   return (
     <button
-      className="px-4 py-2 h-10 text-white bg-red-500 hover:bg-red-600 rounded-md"
+      className="sm:px-4 py-1 sm:py-2 h-[20px] sm:h-10 text-white md:bg-red-500 md:hover:bg-red-600 rounded-md flex items-center gap-2"
       onClick={handleLogout}
     >
-      로그아웃
+      <span className="hidden sm:inline">로그아웃</span>
+      <LogOut size={20} className="hidden sm:inline" />
+
+      <LogOut size={20} className="sm:hidden" />
     </button>
   )
 }

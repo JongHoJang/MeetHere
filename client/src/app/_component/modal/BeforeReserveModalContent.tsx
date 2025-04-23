@@ -26,10 +26,13 @@ export default function BeforeReserveModalContent({
 
   return (
     <>
-      <div className="flex flex-col justify-center items-center">
-        <h2 className="text-lg font-bold mb-2">{modalTitle}</h2>
+      <div className="text-center">
+        <h2 className="text-xl font-bold mb-2">{modalTitle}</h2>
         <p className="mb-4">{modalDescription}</p>
-        <div className="flex flex-col justify-center items-center gap-3">
+
+        {/* 버튼 컨테이너 */}
+        {/* 신청하기 버튼 */}
+        <div className="w-full max-w-[300px] mx-auto">
           <ReserveButton
             buttonLabel="신청하기"
             roomId={roomId}
@@ -38,14 +41,16 @@ export default function BeforeReserveModalContent({
             onSuccess={onSuccess}
             onFail={onFail}
           />
-          <button
-            type="button"
-            className="text-md font-bold underline"
-            onClick={handleClose}
-          >
-            다시 선택하기
-          </button>
         </div>
+
+        {/* 다시 선택하기 버튼 */}
+        <button
+          type="button"
+          className="w-[320px] text-md font-bold underline text-gray-600 hover:text-black transition"
+          onClick={handleClose}
+        >
+          다시 선택하기
+        </button>
       </div>
     </>
   )

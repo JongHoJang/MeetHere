@@ -2,6 +2,7 @@
 import { LoginForm } from '@/types/auth'
 import api from '@/lib/api/axios'
 import axios, { AxiosError } from 'axios'
+import { setCookie } from 'cookies-next'
 
 // 로그인 axios
 export const login = async ({ email, password }: LoginForm) => {
@@ -10,8 +11,13 @@ export const login = async ({ email, password }: LoginForm) => {
 
     const { accessToken, refreshToken } = res.data
 
-    localStorage.setItem('accessToken', accessToken)
-    localStorage.setItem('refreshToken', refreshToken)
+    // ✅ accessToken을 쿠키에 저장
+    setCookie('accessToken', accessToken, {
+      // maxAge: 60,
+      path: '/',
+    })
+
+    localStorage.setItem('refreshToken', refreshToken) // 이건 필요하다면 유지
 
     return { success: true }
   } catch (err: unknown) {

@@ -68,10 +68,10 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className="flex flex-col w-[1000px] justify-center items-center">
-      <form onSubmit={handleSubmit} className="w-[500px]">
+    <div className="flex flex-col items-center w-full">
+      <form onSubmit={handleSubmit} className="w-full max-w-[1000px]">
         <div className="mb-6">
-          <h3 className="text-xl font-bold">📌 가입 대상 확인</h3>
+          <h3 className="text-lg md:text-xl font-bold">📌 가입 대상 확인</h3>
           <p className="text-md">
             교회에 등록된 정보(이름, 교번 등)을 기반으로 인증을 진행합니다.
           </p>
@@ -84,9 +84,10 @@ const SignUpForm = () => {
           type="text"
           placeholder="이름을 입력하세요"
           onChange={handleInputChange}
+          className="w-full"
         />
 
-        <div className="flex justify-between w-full">
+        <div className="flex flex-col sm:flex-row justify-between md:gap-4 w-full">
           <InputField
             label="생년월일"
             id="birthday"
@@ -94,7 +95,7 @@ const SignUpForm = () => {
             type="date"
             placeholder="생년월일을 선택해주세요"
             onChange={handleInputChange}
-            className="w-[240px]"
+            className="w-full sm:w-[240px]"
           />
           <InputField
             label={
@@ -113,7 +114,7 @@ const SignUpForm = () => {
             type="number"
             placeholder="교번을 입력하세요"
             onChange={handleInputChange}
-            className="w-[240px]"
+            className="w-full sm:w-[240px]"
           />
         </div>
 
@@ -139,7 +140,7 @@ const SignUpForm = () => {
         <div className="border-t border-gray-300 my-12"></div>
 
         <div className="mb-6">
-          <h3 className="text-xl font-bold">📌 로그인 정보 설정</h3>
+          <h3 className="text-lg md:text-xl font-bold">📌 로그인 정보 설정</h3>
           <p className="text-md">
             회원가입 후 로그인 시 사용할 정보를 입력해주세요.
           </p>
@@ -155,7 +156,7 @@ const SignUpForm = () => {
           className="w-full"
         />
 
-        <div className="flex justify-between w-full">
+        <div className="flex flex-col sm:flex-row justify-between md:gap-4 w-full">
           <InputField
             label="비밀번호"
             id="password"
@@ -163,7 +164,7 @@ const SignUpForm = () => {
             type="password"
             placeholder="비밀번호를 입력하세요"
             onChange={handleInputChange}
-            className="w-[240px]"
+            className="w-full sm:w-[240px]"
             value={password}
           />
           <InputField
@@ -173,13 +174,15 @@ const SignUpForm = () => {
             type="password"
             placeholder="비밀번호를 다시 입력하세요"
             onChange={handleInputChange}
-            className="w-[240px]"
+            className="w-full sm:w-[240px]"
             value={confirmPassword}
           />
         </div>
 
-        <div className="flex justify-center mt-10">
-          <SignUpButton type="submit" buttonLabel="회원가입 하기" />
+        <div className="mt-10 w-full">
+          <div className="w-full max-w-[380px] mx-auto sm:px-0">
+            <SignUpButton type="submit" buttonLabel="회원가입 하기" />
+          </div>
         </div>
       </form>
     </div>

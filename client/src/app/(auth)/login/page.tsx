@@ -1,21 +1,20 @@
 import LoginForm from '@/app/(auth)/login/_component/LoginForm'
 import SignUpButton from '@/app/(auth)/login/_component/SignUpButton'
+import LoginPageContext from '@/app/(auth)/login/_component/LoginPageContext'
 
 const LoginPage = async () => {
   return (
-    <div>
-      <div className="flex flex-col items-center mt-14 mb-24">
-        <h2 className="text-4xl font-bold mb-3">🗳 여기서 만나 🗳</h2>
-        <h3 className="text-xl font-medium">
-          나무모임을 위한 공간을 신청하고 관리하는
-        </h3>
-        <h3 className="text-xl font-medium">리더들을 위한 서비스입니다.</h3>
+    <>
+      <div className="w-full py-10">
+        <div className="px-4 sm:px-0">
+          <LoginPageContext />
+          <div className="flex flex-col mx-auto gap-4 mt-10 sm:mt-14 max-w-[380px]">
+            <LoginForm />
+            <SignUpButton />
+          </div>
+        </div>
       </div>
-      <div className="flex flex-col items-center gap-4">
-        <LoginForm />
-        <SignUpButton />
-      </div>
-    </div>
+    </>
   )
 }
 

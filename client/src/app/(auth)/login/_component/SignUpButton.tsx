@@ -7,7 +7,7 @@ const SignUpButton = () => {
   const router = useRouter()
 
   return (
-    <div>
+    <div className="flex justify-center">
       <button
         type="submit"
         className="underline"

@@ -6,9 +6,5 @@ export default function FeatLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <ClientUserLoader>
-      <div className="my-10">{children}</div>
-    </ClientUserLoader>
-  )
+  return <ClientUserLoader>{children}</ClientUserLoader>
 }

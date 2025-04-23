@@ -6,6 +6,7 @@ import SubmitButton from '@/app/_component/button/SubmitButton'
 import { login } from '@/lib/api/auth'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/store/useUserStore'
+import { deleteCookie } from 'cookies-next'
 
 const LoginForm = () => {
   const [email, setEmail] = useState('')
@@ -18,6 +19,7 @@ const LoginForm = () => {
   useEffect(() => {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
+    deleteCookie('accessToken', { path: '/' })
     clearUserInfo()
   }, [])
 
@@ -41,7 +43,7 @@ const LoginForm = () => {
   }
 
   return (
-    <form className="w-[380px]" onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit}>
       <InputField
         label="이메일(아이디)"
         id="email"
