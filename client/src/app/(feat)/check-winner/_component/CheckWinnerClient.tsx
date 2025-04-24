@@ -1,10 +1,12 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { usingRoomUserList } from '@/lib/api/roomController'
 import SignUpButton from '@/app/_component/button/SignUpButton'
 import { useRouter } from 'next/navigation'
 import { useUserStore } from '@/store/useUserStore'
+import LoadingSpinner from '@/app/_component/LoadingSpinner'
+import { useQuery } from '@tanstack/react-query'
 
 type MatchingData = {
   roomName: string | null
@@ -16,22 +18,25 @@ type MatchingData = {
 
 const CheckWinnerClient = () => {
   const router = useRouter()
-  const [matchingList, setMatchingList] = useState<MatchingData[] | null>(null)
   const { userInfo } = useUserStore()
   const userName = userInfo?.userName
 
-  useEffect(() => {
-    const fetchMatchingRoom = async () => {
-      try {
-        const data = await usingRoomUserList()
-        setMatchingList(data)
-      } catch (err) {
-        console.error('방 목록 불러오기 실패', err)
-      }
-    }
+  // useQuery 하나로 로딩·데이터·에러 관리
+  const {
+    data: matchingList,
+    isLoading,
+    error,
+  } = useQuery<MatchingData[]>({
+    queryKey: ['matchingList'],
+    queryFn: usingRoomUserList,
+    staleTime: 1000 * 60 * 5, // 5분 캐시
+  })
 
-    fetchMatchingRoom()
-  }, [])
+  if (isLoading) return <LoadingSpinner />
+  if (error)
+    return (
+      <div className="p-4 text-center text-red-500">당첨자 불러오기 실패</div>
+    )
 
   return (
     <div className="pt-10 pb-20">
