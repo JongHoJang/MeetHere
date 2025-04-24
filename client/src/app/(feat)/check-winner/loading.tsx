@@ -1,9 +1,7 @@
-'use client'
-
-import React from 'react'
 import { SyncLoader } from 'react-spinners'
+import React from 'react'
 
-const LoadingSpinner = () => {
+export default function Loading() {
   return (
     <div className="w-full h-screen flex justify-center items-center bg-white">
       <div className="flex flex-col items-center">
@@ -15,5 +13,3 @@ const LoadingSpinner = () => {
     </div>
   )
 }
-
-export default LoadingSpinner

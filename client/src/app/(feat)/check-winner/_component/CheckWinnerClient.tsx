@@ -21,7 +21,6 @@ const CheckWinnerClient = () => {
   const { userInfo } = useUserStore()
   const userName = userInfo?.userName
 
-  // useQuery 하나로 로딩·데이터·에러 관리
   const {
     data: matchingList,
     isLoading,
@@ -29,7 +28,7 @@ const CheckWinnerClient = () => {
   } = useQuery<MatchingData[]>({
     queryKey: ['matchingList'],
     queryFn: usingRoomUserList,
-    staleTime: 1000 * 60 * 5, // 5분 캐시
+    staleTime: 1000 * 60 * 5,
   })
 
   if (isLoading) return <LoadingSpinner />
