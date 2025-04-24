@@ -1,33 +1,36 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { fetchRoomInfoClient } from '@/lib/api/roomController'
 import { useUserStore } from '@/store/useUserStore'
 import SubmitButton from '@/app/_component/button/SubmitButton'
 import { useRouter } from 'next/navigation'
 import RoomListContainer from '@/app/(feat)/_component/RoomListContainer'
+import { useQuery } from '@tanstack/react-query'
+import LoadingSpinner from '@/app/_component/LoadingSpinner'
 
 const ApplicationOverview = () => {
   const { userInfo } = useUserStore()
   const router = useRouter()
 
-  const [rooms, setRooms] = useState([])
+  const {
+    data: rooms,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ['rooms'],
+    queryFn: fetchRoomInfoClient,
+    staleTime: 1000 * 60 * 5,
+    enabled: !!userInfo,
+  })
 
-  useEffect(() => {
-    const fetchRoomInfo = async () => {
-      try {
-        if (userInfo) {
-          const data = await fetchRoomInfoClient()
-          setRooms(data)
-        }
-      } catch (err) {
-        console.error('방 목록 불러오기 실패', err)
-      }
-    }
-
-    fetchRoomInfo()
-  }, [userInfo])
-  console.log(rooms)
+  if (isLoading) return <LoadingSpinner />
+  if (error)
+    return (
+      <div className="p-4 text-center text-red-500">
+        신청 현황 불러오는 도중 오류가 발생했습니다.
+      </div>
+    )
 
   return (
     <div className="pt-10 sm:pb-20">

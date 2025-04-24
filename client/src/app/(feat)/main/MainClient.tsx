@@ -4,6 +4,7 @@ import React from 'react'
 import GuideText from '@/app/(feat)/_component/GuideText'
 import { useUserStore } from '@/store/useUserStore'
 import { useRouter } from 'next/navigation'
+import LoadingSpinner from '@/app/_component/LoadingSpinner'
 
 // 상태에 따른 메시지 분기처리
 const getStatusMessage = (
@@ -31,7 +32,7 @@ const getStatusMessage = (
         </>
       )
     case 'LOSER':
-      return '아쉽게도 이번에는 당첨되지 않았습니다. 다음 기회를 노려보세 요! 💪'
+      return '아쉽게도 이번에는 당첨되지 않았습니다. 다음 기회를 노려보세요! 💪'
     default:
       return '신청 상태를 불러오는 중입니다...'
   }
@@ -74,6 +75,8 @@ const MainClient = () => {
   const router = useRouter()
 
   const { label, path, disabled } = getButtonProps(userInfo?.status)
+
+  if (!userInfo) return <LoadingSpinner />
 
   return (
     <div className="pt-10 pb-20">

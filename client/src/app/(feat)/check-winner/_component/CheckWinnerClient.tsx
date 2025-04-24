@@ -34,7 +34,9 @@ const CheckWinnerClient = () => {
   if (isLoading) return <LoadingSpinner />
   if (error)
     return (
-      <div className="p-4 text-center text-red-500">당첨자 불러오기 실패</div>
+      <div className="p-4 text-center text-red-500">
+        당첨자를 불러오는 도중 오류가 발생했습니다.
+      </div>
     )
 
   return (
