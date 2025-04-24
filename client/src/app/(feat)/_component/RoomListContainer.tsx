@@ -16,7 +16,7 @@ const RoomListContainer: React.FC<RoomListContainerProps> = ({
   selectedRoom,
   clickable = false,
 }) => {
-  const floorList = Array.from(new Set(rooms.map(room => room.floor))).sort()
+  const floorList = Array.from(new Set(rooms?.map(room => room.floor))).sort()
 
   return (
     <div className="space-y-8">
@@ -29,7 +29,7 @@ const RoomListContainer: React.FC<RoomListContainerProps> = ({
             </h2>
             {/*<div className="flex flex-wrap gap-4">*/}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
-              {roomsOnFloor.map(room => (
+              {roomsOnFloor?.map(room => (
                 <RoomCard
                   key={room.roomId}
                   room={room}

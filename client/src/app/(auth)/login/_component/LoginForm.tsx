@@ -11,6 +11,8 @@ import { deleteCookie } from 'cookies-next'
 const LoginForm = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
   const router = useRouter()
 
   const { clearUserInfo } = useUserStore()
@@ -25,13 +27,14 @@ const LoginForm = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
+    setIsLoading(true)
     try {
       const result = await login({ email, password })
       if (result.success) {
-        router.push('/main')
+        router.replace('/main')
       } else {
         alert(result.error || '로그인에 실패했습니다.')
+        setIsLoading(false)
       }
     } catch (err) {
       if (err instanceof Error) {
@@ -39,6 +42,7 @@ const LoginForm = () => {
       } else {
         alert('로그인 중 오류 발생')
       }
+      setIsLoading(false)
     }
   }
 
@@ -63,7 +67,11 @@ const LoginForm = () => {
       />
 
       <div className="mt-8">
-        <SubmitButton buttonLabel={'로그인'} />
+        {/*<SubmitButton buttonLabel={'로그인'} />*/}
+        <SubmitButton
+          buttonLabel={isLoading ? '로그인 중...' : '로그인'}
+          disabled={isLoading}
+        />
       </div>
     </form>
   )
