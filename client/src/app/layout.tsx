@@ -17,8 +17,23 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: '만청 소그룹실 예약 시스템',
+  title: '여기서 만나',
   description: '만나교회 청년부 소그룹실 예약 시스템입니다.',
+  openGraph: {
+    title: '여기서 만나',
+    description: '만나교회 청년부 소그룹실 예약 시스템입니다.',
+    url: 'https://group-room-reservation.vercel.app/',
+    siteName: '여기서 만나',
+    images: [
+      {
+        url: 'https://group-room-reservation.vercel.app/thumbnail.png', // ← 썸네일 이미지 URL
+        width: 1200,
+        height: 630,
+        alt: '만청 소그룹실 예약 시스템 썸네일',
+      },
+    ],
+    type: 'website',
+  },
 }
 
 export default async function RootLayout({
