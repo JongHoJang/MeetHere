@@ -22,6 +22,7 @@ const ApplicationOverview = () => {
     queryFn: fetchRoomInfoClient,
     staleTime: 1000 * 60 * 5,
     enabled: !!userInfo,
+    refetchOnWindowFocus: true, // 탭이 포커스될 때 자동 refetch
   })
 
   if (isLoading) return <LoadingSpinner />
@@ -38,7 +39,7 @@ const ApplicationOverview = () => {
         <div className="px-4 md:px-0">
           <div>
             <div className="flex flex-row text-xl md:text-2xl mb-4">
-              <h1>소소그룹실 지원 현황입니다 👋</h1>
+              <h1>소그룹실 지원 현황입니다 👋</h1>
             </div>
 
             {/*박스*/}
