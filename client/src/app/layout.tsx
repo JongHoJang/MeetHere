@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     siteName: '여기서 만나',
     images: [
       {
-        url: 'https://group-room-reservation.vercel.app/thumbnail.png', // ← 썸네일 이미지 URL
+        url: 'https://group-room-reservation.vercel.app/thumbnail.png',
         width: 1200,
         height: 630,
         alt: '만청 소그룹실 예약 시스템 썸네일',
@@ -43,6 +43,30 @@ export default async function RootLayout({
 }>) {
   return (
     <html lang="ko" className={pretendard.className}>
+      <head>
+        <title>여기서 만나</title>
+        <meta
+          name="description"
+          content="만나교회 청년부 소그룹실 예약 시스템입니다."
+        />
+        <meta property="og:title" content="여기서 만나" />
+        <meta
+          property="og:description"
+          content="만나교회 청년부 소그룹실 예약 시스템입니다."
+        />
+        <meta
+          property="og:url"
+          content="https://group-room-reservation.vercel.app/"
+        />
+        <meta property="og:site_name" content="여기서 만나" />
+        <meta
+          property="og:image"
+          content="https://group-room-reservation.vercel.app/thumbnail.png"
+        />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:type" content="website" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased font-pretendard min-h-screen flex flex-col`}
       >
