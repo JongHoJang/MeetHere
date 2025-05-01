@@ -11,7 +11,7 @@ export const FailModalContent = ({ onClose }: FailProps) => {
   return (
     <div className="text-center">
       <h2 className="text-xl font-bold mb-6">예약에 실패했습니다.</h2>
-      <div className="mb-4 text-center w-[320px]">
+      <div className="mb-4 text-center w-[320px] mx-auto">
         <p>예약을 다시 시도해 주세요.</p>
         <p>문제가 계속되면 목회팀에게 문의해 주세요.</p>
       </div>
@@ -20,7 +20,7 @@ export const FailModalContent = ({ onClose }: FailProps) => {
         <SubmitButton
           onClick={() => {
             onClose()
-            router.push('/apply')
+            router.push('/main')
           }}
           buttonLabel={'확인'}
         />
