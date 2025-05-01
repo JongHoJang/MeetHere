@@ -17,7 +17,6 @@ import LoadingSpinner from '@/app/_component/LoadingSpinner'
 const Apply = () => {
   const { userInfo } = useUserStore()
 
-  // const [rooms, setRooms] = useState([])
   const [selectedRoom, setSelectedRoom] = useState<Room | null>(null)
   const [isNormalModalOpen, setIsNormalModalOpen] = useState(false)
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false)
@@ -71,7 +70,18 @@ const Apply = () => {
               </div>
             </div>
             {/* 박스 외부*/}
-            <GuideText />
+            <GuideText
+              deadlineTime={userInfo?.applicationDeadline
+                .split('T')[1]
+                .split(':')
+                .slice(0, 2)
+                .join(':')}
+              announcementTime={userInfo?.announcementTime
+                .split('T')[1]
+                .split(':')
+                .slice(0, 2)
+                .join(':')}
+            />
           </div>
         </div>
       </div>

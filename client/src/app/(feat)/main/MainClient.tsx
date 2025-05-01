@@ -5,6 +5,9 @@ import GuideText from '@/app/(feat)/_component/GuideText'
 import { useUserStore } from '@/store/useUserStore'
 import { useRouter } from 'next/navigation'
 import LoadingSpinner from '@/app/_component/LoadingSpinner'
+import dayjs from 'dayjs'
+import 'dayjs/locale/ko'
+import { RefreshCw } from 'lucide-react'
 
 // 상태에 따른 메시지 분기처리
 const getStatusMessage = (
@@ -20,19 +23,26 @@ const getStatusMessage = (
       return (
         <>
           <span className="font-bold text-main-d-black">{roomName}</span>
-          실로 신청이 완료되었습니다. 발표일을 기다려 주세요!
+          실로 신청이 완료되었습니다. <br />
+          발표일을 기다려 주세요!
         </>
       )
     case 'WINNER':
       return (
         <>
-          🎉 축하드립니다!{' '}
-          <span className="font-bold text-main-d-black">{roomName}</span>{' '}
-          소그룹실에 당첨되셨어요. 사용 일정을 확인해 주세요.
+          🎉 축하드립니다! {''}
+          <span className="font-bold text-red-500">{roomName}</span> 소그룹실에
+          당첨되셨어요. <br />
+          사용 일정을 확인해 주세요.
         </>
       )
     case 'LOSER':
-      return '아쉽게도 이번에는 당첨되지 않았습니다. 다음 기회를 노려보세요! 💪'
+      return (
+        <>
+          아쉽게도 이번에는 당첨되지 않았습니다. <br /> 다음 기회를 노려보세요!
+          💪
+        </>
+      )
     default:
       return '신청 상태를 불러오는 중입니다...'
   }
@@ -44,12 +54,14 @@ const getButtonProps = (status: string | undefined) => {
     case 'BEFORE_APPLICATION':
       return {
         label: '신청하러 가기',
+        title: '신청 내역',
         path: '/apply',
         disabled: false,
       }
     case 'AFTER_APPLICATION':
       return {
         label: '신청현황 보러가기',
+        title: '신청 내역',
         path: '/application-overview',
         disabled: false,
       }
@@ -58,6 +70,7 @@ const getButtonProps = (status: string | undefined) => {
     case 'LOSER':
       return {
         label: '신청하러 가기',
+        title: '당첨 내역',
         path: '/apply',
         disabled: true,
       }
@@ -69,14 +82,14 @@ const getButtonProps = (status: string | undefined) => {
       }
   }
 }
-
 const MainClient = () => {
   const { userInfo } = useUserStore()
   const router = useRouter()
 
-  const { label, path, disabled } = getButtonProps(userInfo?.status)
+  const { label, path, disabled, title } = getButtonProps(userInfo?.status)
 
   if (!userInfo) return <LoadingSpinner />
+  dayjs.locale('ko')
 
   return (
     <div className="pt-10 pb-20">
@@ -84,13 +97,24 @@ const MainClient = () => {
       <div className="mx-auto w-full max-w-[800px]">
         <div className="px-4 md:px-0 pb-4">
           {/*타이틀*/}
-          <div className="flex flex-row text-xl md:text-2xl mb-4">
-            <h1 className="font-semibold flex items-center">
-              <span className="">{userInfo?.userName}</span>
-            </h1>
-            <h1>
-              <span className="font-semibold">&nbsp;리더님,</span> 환영합니다 👋
-            </h1>
+
+          <div className="flex text-xl md:text-2xl mb-4 justify-between">
+            <div className="flex flex-row">
+              <h1 className="font-semibold flex items-center">
+                <span className="">{userInfo?.userName}</span>
+              </h1>
+              <h1>
+                <span className="font-semibold">&nbsp;리더님,</span> 환영합니다
+                👋
+              </h1>
+            </div>
+            <div
+              className="flex items-center justify-center cursor-pointer bg-gray-100 rounded px-2 text-sm gap-1 text-gray-600 hover:bg-gray-300 transition-colors duration-200 "
+              onClick={() => window.location.reload()}
+            >
+              <RefreshCw className="w-4 h-4 " />
+              새로고침
+            </div>
           </div>
 
           {/*  /!*박스 내부*!/*/}
@@ -102,16 +126,19 @@ const MainClient = () => {
                   <div className="flex w-full md:w-[150px] md:justify-between">
                     <div className="flex flex-row md:flex-col gap-4 md:w-[150px] md:gap-0">
                       <div className="font-bold text-sm min-w-[70px] md:mb-1">
-                        신청 마감
+                        신청 기간
                       </div>
                       <span className="inline-block w-full min-w-[140px] md:w-[150px]">
                         <span>
-                          {userInfo?.applicationDeadline.split('T')[0]} (월)
+                          {/*{userInfo?.applicationDeadline.split('T')[0]} (월)*/}
+                          {dayjs(userInfo?.applicationDeadline).format(
+                            'MM-DD (ddd)'
+                          )}
                         </span>
                       </span>
 
                       <span className="inline-block w-full md:w-[150px]">
-                        {' '}
+                        00:00 ~{' '}
                         {userInfo?.applicationDeadline
                           .split('T')[1]
                           .split(':')
@@ -130,7 +157,10 @@ const MainClient = () => {
                       </div>
                       <span className="inline-block w-full min-w-[140px] md:w-[150px]">
                         <span>
-                          {userInfo?.announcementTime.split('T')[0]} (월)
+                          {/*{userInfo?.announcementTime.split('T')[0]} (월)*/}
+                          {dayjs(userInfo?.announcementTime).format(
+                            'MM-DD (ddd)'
+                          )}
                         </span>
                       </span>
                       <span className="inline-block w-full md:w-[150px]">
@@ -151,10 +181,10 @@ const MainClient = () => {
                         사용일
                       </div>
                       <span className="inline-block w-full min-w-[140px] md:w-[150px]">
-                        {userInfo?.useDate} (주일)
+                        {dayjs(userInfo?.useDate).format('MM-DD (주일)')}
                       </span>
                       <span className="inline-block w-full md:w-[150px]">
-                        예배 후
+                        예배 후 ~ 18:00
                       </span>
                     </div>
                   </div>
@@ -165,7 +195,7 @@ const MainClient = () => {
 
                 {/* 신청 내역 */}
                 <div className="hidden md:block">
-                  <div className="font-bold text-sm mb-1">신청 내역</div>
+                  <div className="font-bold text-sm mb-1">{title}</div>
                   <div>
                     {getStatusMessage(userInfo?.status, userInfo?.roomName)}
                   </div>
@@ -176,7 +206,7 @@ const MainClient = () => {
             {/* 모바일용 신청 내역 */}
             <div className="block md:hidden mb-2">
               <div className=" mt-4 shadow w-full bg-[#f5f5f5] p-4 py-6 rounded-[4px]">
-                <div className="font-bold text-sm mb-2">신청 내역</div>
+                <div className="font-bold text-sm mb-2">{title}</div>
                 <div>
                   {getStatusMessage(userInfo?.status, userInfo?.roomName)}
                 </div>
@@ -214,12 +244,14 @@ const MainClient = () => {
         </button>
 
         {/* 당첨자 확인 버튼 > 추첨 이후에만 제공됨*/}
-        <button
-          className="h-[60px] min-w-[120px] md:w-[150px] rounded-[4px] text-white text-base md:text-lg font-bold transition-colors duration-200 bg-main-d-black hover:bg-[#444]"
-          onClick={() => router.push('/check-winner')}
-        >
-          당첨자 확인
-        </button>
+        {title === '당첨 내역' && (
+          <button
+            className="h-[60px] min-w-[120px] md:w-[150px] rounded-[4px] text-white text-base md:text-lg font-bold transition-colors duration-200 bg-main-d-black hover:bg-[#444]"
+            onClick={() => router.push('/check-winner')}
+          >
+            당첨자 확인
+          </button>
+        )}
       </div>
     </div>
   )

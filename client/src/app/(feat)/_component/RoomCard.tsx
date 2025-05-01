@@ -44,7 +44,7 @@ const RoomCard: React.FC<RoomCardProps> = ({
           <div className="text-xs font-medium flex items-center justify-center pt-2">
             {room.personAffordableCount === 100
               ? '인원 제한 없음'
-              : `${room.personAffordableCount}명 가능`}
+              : `최대 인원 : ${room.personAffordableCount}명`}
           </div>
         </div>
       </div>
@@ -58,7 +58,7 @@ const RoomCard: React.FC<RoomCardProps> = ({
               : 'text-black'
           }
         >
-          예약 인원: {room.reservationCount} / {room.groupAffordableCount}
+          신청한 나무 : {room.reservationCount} / {room.groupAffordableCount}
         </span>
       </div>
     </div>

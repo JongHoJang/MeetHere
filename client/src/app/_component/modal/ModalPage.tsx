@@ -17,9 +17,10 @@ export default function Modal({ open, onClose, children }: ModalProps) {
       <div
         className="
           bg-white
-           sm:w-[512px]
+          w-full
+          sm:w-[512px]
           h-auto
-          p-6 sm:rounded sm:shadow-md
+          p-6 rounded shadow-md
           box-border
         "
         onClick={e => e.stopPropagation()}
