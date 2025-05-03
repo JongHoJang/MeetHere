@@ -7,12 +7,16 @@ import { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import SignUpButton from '@/app/_component/button/SignUpButton'
 import { signUp } from '@/lib/api/auth'
+import DatePickerInputField from '@/app/(auth)/_component/DatePickerInputField'
+import { format } from 'date-fns'
 
 const SignUpForm = () => {
   const router = useRouter()
 
   const [name, setName] = useState('')
-  const [birthday, setBirthday] = useState('')
+  // const [birthday, setBirthday] = useState('')
+  const [birthday, setBirthday] = useState<Date | null>(null)
+
   const [churchMemberId, setChurchMemberId] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -24,14 +28,17 @@ const SignUpForm = () => {
   ) => {
     const { name, value } = e.target
     if (name === 'name') setName(value)
-    if (name === 'birthday') setBirthday(value)
+    // if (name === 'birthday') setBirthday(value)
+    // if (name === 'birthday') {
+    //   setBirthday(value ? new Date(value) : null)
+    // }
     if (name === 'churchMemberId') setChurchMemberId(value)
     if (name === 'email') setEmail(value)
     if (name === 'password') setPassword(value)
     if (name === 'confirmPassword') setConfirmPassword(value)
     if (name === 'communityCode') setCommunityCode(value)
   }
-
+  const formattedBirthday = birthday ? format(birthday, 'yyyy-MM-dd') : ''
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
@@ -45,7 +52,7 @@ const SignUpForm = () => {
     try {
       const result = await signUp({
         name,
-        birthday,
+        birthday: formattedBirthday,
         churchMemberId: parseInt(churchMemberId),
         email,
         password,
@@ -87,15 +94,22 @@ const SignUpForm = () => {
           className="w-full"
         />
 
-        <div className="flex flex-col sm:flex-row justify-between md:gap-4 w-full">
-          <InputField
+        <div className="">
+          {/*<InputField*/}
+          {/*  label="생년월일"*/}
+          {/*  id="birthday"*/}
+          {/*  name="birthday"*/}
+          {/*  type="date"*/}
+          {/*  placeholder="생년월일을 선택해주세요"*/}
+          {/*  onChange={handleInputChange}*/}
+          {/*  className="w-full  h-[47px] sm:h-[58px]"*/}
+          {/*/>*/}
+          <DatePickerInputField
             label="생년월일"
             id="birthday"
-            name="birthday"
-            type="date"
-            placeholder="생년월일을 선택해주세요"
-            onChange={handleInputChange}
-            className="w-full sm:w-[240px]"
+            selectedDate={birthday}
+            onChange={setBirthday}
+            className="w-[100%] h-[47px] sm:h-[58px]"
           />
           <InputField
             label={
@@ -114,7 +128,7 @@ const SignUpForm = () => {
             type="number"
             placeholder="교번을 입력하세요"
             onChange={handleInputChange}
-            className="w-full sm:w-[240px]"
+            className="w-[100%] h-[47px] sm:h-[58px]"
           />
         </div>
 
@@ -124,7 +138,7 @@ const SignUpForm = () => {
           name="communityCode"
           placeholder="공동체를 선택하세요"
           onChange={handleInputChange}
-          className="w-full"
+          className="w-full h-[47px] sm:h-[58px]"
           options={[
             { value: 1, label: '요셉' },
             { value: 2, label: '다윗' },
