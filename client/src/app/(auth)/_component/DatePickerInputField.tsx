@@ -1,53 +1,45 @@
 'use client'
 
-import React, { useState } from 'react'
+import React from 'react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
 
-interface InputFieldProps {
+interface DatePickerInputFieldProps {
   label: string
   id: string
-  name: string
-  placeholder: string
+  selectedDate: Date | null
+  onChange: (date: Date | null) => void
+  placeholder?: string
   className?: string
-  onChange?: (date: Date | null) => void
-  defaultDate?: Date
 }
 
-const DatePickerInputField: React.FC<InputFieldProps> = ({
+const DatePickerInputField: React.FC<DatePickerInputFieldProps> = ({
   label,
   id,
-  placeholder,
+  selectedDate,
   onChange,
-  defaultDate = new Date('1994-01-01'),
+  placeholder = '생년월일을 선택해주세요',
   className,
 }) => {
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null)
-
-  const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date)
-    if (onChange) onChange(date)
-  }
-
   return (
-    <div className="flex flex-col mb-5 w-full">
-      <label htmlFor={id} className="mb-1 text-sm font-medium text-gray-700">
+    <div className="flex flex-col mb-5">
+      <label
+        htmlFor={id}
+        className="mb-1 text-sm sm:text-base font-medium text-gray-700"
+      >
         {label}
       </label>
       <DatePicker
         id={id}
         selected={selectedDate}
-        onChange={handleDateChange}
-        placeholderText={placeholder}
-        openToDate={defaultDate}
+        onChange={onChange}
         dateFormat="yyyy-MM-dd"
+        placeholderText={placeholder}
         showYearDropdown
         showMonthDropdown
         dropdownMode="select"
-        className={`border-[1px] border-solid border-sub-d-black rounded-[4px] px-4 py-4 text-sm ${className}`}
-        wrapperClassName="w-full"
-        minDate={new Date('1900-01-01')}
-        maxDate={new Date()}
+        className={`w-full border-[1px] border-solid border-sub-d-black rounded-[4px]
+                    px-4 py-3 text-sm sm:py-4 sm:text-base  ${className}`}
       />
     </div>
   )

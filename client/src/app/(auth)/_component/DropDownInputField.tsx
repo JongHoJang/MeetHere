@@ -32,7 +32,7 @@ const DropdownInputField: React.FC<DropdownInputFieldProps> = ({
       id={id}
       name={name}
       onChange={onChange}
-      className={`border-[1px] border-solid border-sub-d-black rounded-[4px] px-4 py-4 text-sm ${className}`}
+      className={`border-[1px] border-solid border-sub-d-black rounded-[4px] px-4 py-3 text-sm sm:py-4 sm:text-base ${className}`}
     >
       <option value="">{placeholder}</option>
       {options.map((option, index) => (
