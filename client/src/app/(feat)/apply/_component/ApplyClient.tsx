@@ -30,6 +30,7 @@ const Apply = () => {
     queryKey: ['rooms'],
     queryFn: fetchRoomInfoClient,
     staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: true, // 탭이 포커스될 때 자동 refetch
   })
   if (isLoading) return <LoadingSpinner />
   if (error)
