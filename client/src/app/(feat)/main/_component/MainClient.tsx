@@ -16,14 +16,24 @@ const getStatusMessage = (
 ) => {
   switch (status) {
     case 'NOT_APPLIED':
-      return '신청 기간이 종료되었습니다. 다음 주엔 꼭 신청해 주세요! 😄'
+      return (
+        <>
+          신청 기간이 종료되었습니다. <br className="block sm:hidden" />
+          다음 주엔 꼭 신청해 주세요! 😄
+        </>
+      )
     case 'BEFORE_APPLICATION':
-      return `아직 신청하지 않으셨네요! 지금 바로 신청해 보세요!`
+      return (
+        <>
+          아직 신청하지 않으셨네요! <br className="block sm:hidden" />
+          지금 바로 신청해 보세요!
+        </>
+      )
     case 'AFTER_APPLICATION':
       return (
         <>
           <span className="font-bold text-main-d-black">{roomName}</span>
-          실로 신청이 완료되었습니다. <br />
+          실로 신청이 완료되었습니다. <br className="block sm:hidden" />
           발표일을 기다려 주세요!
         </>
       )
@@ -32,15 +42,16 @@ const getStatusMessage = (
         <>
           🎉 축하드립니다! {''}
           <span className="font-bold text-red-500">{roomName}</span> 소그룹실에
-          당첨되셨어요. <br />
+          당첨되셨어요. <br className="block sm:hidden" />
           사용 일정을 확인해 주세요.
         </>
       )
     case 'LOSER':
       return (
         <>
-          아쉽게도 이번에는 당첨되지 않았습니다. <br /> 다음 기회를 노려보세요!
-          💪
+          아쉽게도 이번에는 당첨되지 않았습니다.{' '}
+          <br className="block sm:hidden" />
+          다음 기회를 노려보세요! 💪
         </>
       )
     default:
@@ -112,8 +123,8 @@ const MainClient = () => {
               className="flex items-center justify-center cursor-pointer bg-gray-100 rounded px-2 text-sm gap-1 text-gray-600 hover:bg-gray-300 transition-colors duration-200 "
               onClick={() => window.location.reload()}
             >
-              <RefreshCw className="w-4 h-4 " />
-              새로고침
+              <RefreshCw className="w-4 h-4" />
+              <span className="hidden sm:inline">새로고침</span>
             </div>
           </div>
 
@@ -125,10 +136,10 @@ const MainClient = () => {
                 <div className="flex md:flex-row flex-col justify-between gap-4 md:gap-0">
                   <div className="flex w-full md:w-[150px] md:justify-between">
                     <div className="flex flex-row md:flex-col gap-4 md:w-[150px] md:gap-0">
-                      <div className="font-bold text-sm min-w-[70px] md:mb-1">
+                      <div className="font-bold text-sm min-w-[70px] md:mb-1 my-auto">
                         신청 기간
                       </div>
-                      <span className="inline-block w-full min-w-[140px] md:w-[150px]">
+                      <span className="inline-block w-full min-w-[100px] md:w-[150px]">
                         <span>
                           {/*{userInfo?.applicationDeadline.split('T')[0]} (월)*/}
                           {dayjs(userInfo?.applicationDeadline).format(
@@ -139,11 +150,13 @@ const MainClient = () => {
 
                       <span className="inline-block w-full md:w-[150px]">
                         00:00 ~{' '}
-                        {userInfo?.applicationDeadline
-                          .split('T')[1]
-                          .split(':')
-                          .slice(0, 2)
-                          .join(':')}
+                        <span className="font-bold">
+                          {userInfo?.applicationDeadline
+                            .split('T')[1]
+                            .split(':')
+                            .slice(0, 2)
+                            .join(':')}
+                        </span>
                       </span>
                     </div>
                   </div>
@@ -152,10 +165,10 @@ const MainClient = () => {
                   <div className="flex-row md:flex-col w-full md:w-[150px]">
                     <div className="flex flex-row gap-4 md:flex-col md:w-[150px] md:gap-0">
                       {' '}
-                      <div className="font-bold text-sm min-w-[70px] md:mb-1">
+                      <div className="font-bold text-sm min-w-[70px] md:mb-1 my-auto">
                         발표 일시
                       </div>
-                      <span className="inline-block w-full min-w-[140px] md:w-[150px]">
+                      <span className="inline-block w-full min-w-[100px] md:w-[150px]">
                         <span>
                           {/*{userInfo?.announcementTime.split('T')[0]} (월)*/}
                           {dayjs(userInfo?.announcementTime).format(
@@ -164,11 +177,13 @@ const MainClient = () => {
                         </span>
                       </span>
                       <span className="inline-block w-full md:w-[150px]">
-                        {userInfo?.announcementTime
-                          .split('T')[1]
-                          .split(':')
-                          .slice(0, 2)
-                          .join(':')}
+                        <span className="font-bold">
+                          {userInfo?.announcementTime
+                            .split('T')[1]
+                            .split(':')
+                            .slice(0, 2)
+                            .join(':')}
+                        </span>
                       </span>
                     </div>
                   </div>
@@ -177,14 +192,14 @@ const MainClient = () => {
                   <div className="flex-row md:flex-col w-full md:w-[150px]">
                     <div className="flex flex-row gap-4 md:flex-col md:w-[150px] md:gap-0">
                       {' '}
-                      <div className="font-bold text-sm min-w-[70px] md:mb-1">
+                      <div className="font-bold text-sm min-w-[70px] md:mb-1 my-auto">
                         사용일
                       </div>
-                      <span className="inline-block w-full min-w-[140px] md:w-[150px]">
+                      <span className="inline-block w-full min-w-[100px] md:w-[150px]">
                         {dayjs(userInfo?.useDate).format('MM-DD (주일)')}
                       </span>
                       <span className="inline-block w-full md:w-[150px]">
-                        예배 후 ~ 18:00
+                        예배 후 ~<span className="font-bold">18:00</span>
                       </span>
                     </div>
                   </div>

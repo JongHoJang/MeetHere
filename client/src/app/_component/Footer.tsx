@@ -9,12 +9,12 @@ const Footer = async () => {
         </p>
         <div className="flex flex-row gap-2 md:gap-5 text-sm text-center">
           <a
-            href="https://walnut-hose-a93.notion.site/1e3ebd82d49180248ab0e4ca00f662b3?v=1e3ebd82d4918078ae0a000c1496da0a&pvs=4"
+            href="https://walnut-hose-a93.notion.site/1e8ebd82d49180c88637c0e4538efd0b?pvs=4"
             className="text-blue-300 underline"
             target="_blank"
             rel="noopener noreferrer"
           >
-            사용방법
+            이용 안내
           </a>
           /
           <a

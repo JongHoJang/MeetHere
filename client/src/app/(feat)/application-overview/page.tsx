@@ -1,4 +1,4 @@
-import ApplicationOverview from '@/app/(feat)/application-overview/ApplicationOverview'
+import ApplicationOverview from '@/app/(feat)/application-overview/_component/ApplicationOverview'
 
 const ApplyPage = () => {
   return <ApplicationOverview />
