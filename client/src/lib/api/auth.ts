@@ -15,6 +15,7 @@ export const login = async ({ email, password }: LoginForm) => {
         withCredentials: true, // 쿠키 포함 필수
       }
     )
+    console.log('로그인 응답:', res.data)
     // const { accessToken, refreshToken } = res.data
     //
     // // accessToken을 쿠키에 저장
@@ -31,6 +32,7 @@ export const login = async ({ email, password }: LoginForm) => {
     return { success: true }
   } catch (err: unknown) {
     let errorMessage = '로그인 실패'
+    console.error('로그인 실패:', err)
 
     if (err && typeof err === 'object' && 'response' in err) {
       const axiosErr = err as AxiosError<{ message: string }>
