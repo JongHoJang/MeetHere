@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { refreshAccessToken } from '@/lib/api/auth'
-import { deleteCookie, getCookie, setCookie } from 'cookies-next'
+import { deleteCookie } from 'cookies-next'
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -17,13 +17,13 @@ const api = axios.create({
 // })
 
 // 요청마다 accessToken 자동 삽입 > 쿠키 저장용
-api.interceptors.request.use(config => {
-  const token = getCookie('accessToken') // 쿠키에서 accessToken 가져옴
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`
-  }
-  return config
-})
+// api.interceptors.request.use(config => {
+//   const token = getCookie('accessToken') // 쿠키에서 accessToken 가져옴
+//   if (token) {
+//     config.headers.Authorization = `Bearer ${token}`
+//   }
+//   return config
+// })
 
 // refreshToken Api 자동화 코드 > 로컬스토리지 저장용
 // api.interceptors.response.use(
@@ -73,10 +73,11 @@ api.interceptors.response.use(
     ) {
       originalRequest._retry = true
       try {
+        // const newAccessToken = await refreshAccessToken()
+        // setCookie('accessToken', newAccessToken, {
+        //   path: '/',
+        // })
         const newAccessToken = await refreshAccessToken()
-        setCookie('accessToken', newAccessToken, {
-          path: '/',
-        })
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
         // console.log('accessToken 재발급 완료')
         return api(originalRequest)

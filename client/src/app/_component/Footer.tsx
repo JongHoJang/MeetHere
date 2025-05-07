@@ -5,7 +5,7 @@ const Footer = async () => {
     <footer className="bottom-0 left-0 right-0 py-4 md:py-7 bg-[#333] text-white z-50 ">
       <div className="w-full max-w-web-main mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-2">
         <p className="text-sm text-center md:text-left">
-          © 2025 MeetHear. All rights reserved.
+          © 2025 MeetHere. All rights reserved.
         </p>
         <div className="flex flex-row gap-2 md:gap-5 text-sm text-center">
           <a
