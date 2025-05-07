@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { refreshAccessToken } from '@/lib/api/auth'
+// import { refreshAccessToken } from '@/lib/api/auth'
 import { deleteCookie } from 'cookies-next'
 
 const api = axios.create({
@@ -77,8 +77,8 @@ api.interceptors.response.use(
         // setCookie('accessToken', newAccessToken, {
         //   path: '/',
         // })
-        const newAccessToken = await refreshAccessToken()
-        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+        // const newAccessToken = await refreshAccessToken()
+        // originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
         // console.log('accessToken 재발급 완료')
         return api(originalRequest)
       } catch (refreshError) {
