@@ -7,15 +7,15 @@ import { AxiosError } from 'axios'
 import { useRouter } from 'next/navigation'
 import SignUpButton from '@/app/_component/button/SignUpButton'
 import { signUp } from '@/lib/api/auth'
-// import DatePickerInputField from '@/app/(auth)/_component/DatePickerInputField'
+import DatePickerInputField from '@/app/(auth)/_component/DatePickerInputField'
 import { format } from 'date-fns'
 
 const SignUpForm = () => {
   const router = useRouter()
 
   const [name, setName] = useState('')
-  const [birthday, setBirthday] = useState('')
-  // const [birthday, setBirthday] = useState<Date | null>(null)
+  // const [birthday, setBirthday] = useState('')
+  const [birthday, setBirthday] = useState<Date | null>(null)
 
   const [churchMemberId, setChurchMemberId] = useState('')
   const [email, setEmail] = useState('')
@@ -28,7 +28,7 @@ const SignUpForm = () => {
   ) => {
     const { name, value } = e.target
     if (name === 'name') setName(value)
-    if (name === 'birthday') setBirthday(value)
+    // if (name === 'birthday') setBirthday(value)
     // if (name === 'birthday') {
     //   setBirthday(value ? new Date(value) : null)
     // }
@@ -95,22 +95,22 @@ const SignUpForm = () => {
         />
 
         <div className="">
-          <InputField
-            label="생년월일"
-            id="birthday"
-            name="birthday"
-            type="date"
-            placeholder="생년월일을 선택해주세요"
-            onChange={handleInputChange}
-            className="w-full  h-[47px] sm:h-[58px]"
-          />
-          {/*<DatePickerInputField*/}
+          {/*<InputField*/}
           {/*  label="생년월일"*/}
           {/*  id="birthday"*/}
-          {/*  selectedDate={birthday}*/}
-          {/*  onChange={setBirthday}*/}
-          {/*  className="w-[100%] h-[47px] sm:h-[58px]"*/}
+          {/*  name="birthday"*/}
+          {/*  type="date"*/}
+          {/*  placeholder="생년월일을 선택해주세요"*/}
+          {/*  onChange={handleInputChange}*/}
+          {/*  className="w-full  h-[47px] sm:h-[58px]"*/}
           {/*/>*/}
+          <DatePickerInputField
+            label="생년월일"
+            id="birthday"
+            selectedDate={birthday}
+            onChange={setBirthday}
+            className="w-[100%] h-[47px] sm:h-[58px]"
+          />
           <InputField
             label={
               <>

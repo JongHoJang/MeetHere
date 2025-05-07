@@ -2,22 +2,31 @@
 import { LoginForm } from '@/types/auth'
 import api from '@/lib/api/axios'
 import axios, { AxiosError } from 'axios'
-import { setCookie } from 'cookies-next'
+// import { setCookie } from 'cookies-next'
 
 // 로그인 axios
 export const login = async ({ email, password }: LoginForm) => {
   try {
-    const res = await api.post('/api/login', { email, password })
+    // const res = await api.post('/api/login', { email, password })
+    const res = await api.post(
+      '/api/login',
+      { email, password },
+      {
+        withCredentials: true, // 🔑 쿠키 포함 필수
+      }
+    )
+    // const { accessToken, refreshToken } = res.data
+    //
+    // // accessToken을 쿠키에 저장
+    // setCookie('accessToken', accessToken, {
+    //   // maxAge: 60,
+    //   path: '/',
+    // }
+    // )
 
-    const { accessToken, refreshToken } = res.data
-
-    // ✅ accessToken을 쿠키에 저장
-    setCookie('accessToken', accessToken, {
-      // maxAge: 60,
-      path: '/',
-    })
-
-    localStorage.setItem('refreshToken', refreshToken) // 이건 필요하다면 유지
+    // localStorage.setItem('refreshToken', refreshToken) // 이건 필요하다면 유지
+    const { refreshToken } = res.data
+    localStorage.setItem('refreshToken', refreshToken)
 
     return { success: true }
   } catch (err: unknown) {

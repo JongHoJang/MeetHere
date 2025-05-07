@@ -67,7 +67,6 @@ const LoginForm = () => {
       />
 
       <div className="mt-8">
-        {/*<SubmitButton buttonLabel={'로그인'} />*/}
         <SubmitButton
           buttonLabel={isLoading ? '로그인 중...' : '로그인'}
           disabled={isLoading}
