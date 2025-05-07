@@ -33,7 +33,9 @@ const LoginForm = () => {
       if (result.success) {
         setIsLoading(false)
         console.log('로그인 성공성공!!')
-        router.replace('/main')
+        if (result.success) {
+          router.replace('/redirect-after-login') // 쿠키 적용 여유 시간 주기
+        }
       } else {
         alert(result.error || '로그인에 실패했습니다.')
         setIsLoading(false)
