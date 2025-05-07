@@ -12,7 +12,7 @@ export const login = async ({ email, password }: LoginForm) => {
       '/api/login',
       { email, password },
       {
-        withCredentials: true, // 🔑 쿠키 포함 필수
+        withCredentials: true, // 쿠키 포함 필수
       }
     )
     // const { accessToken, refreshToken } = res.data

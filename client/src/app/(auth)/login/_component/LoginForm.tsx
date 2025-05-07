@@ -31,6 +31,7 @@ const LoginForm = () => {
     try {
       const result = await login({ email, password })
       if (result.success) {
+        setIsLoading(false)
         router.replace('/main')
       } else {
         alert(result.error || '로그인에 실패했습니다.')
