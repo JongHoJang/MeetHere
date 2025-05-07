@@ -32,6 +32,7 @@ const LoginForm = () => {
       const result = await login({ email, password })
       if (result.success) {
         setIsLoading(false)
+        console.log('로그인 성공성공!!')
         router.replace('/main')
       } else {
         alert(result.error || '로그인에 실패했습니다.')
