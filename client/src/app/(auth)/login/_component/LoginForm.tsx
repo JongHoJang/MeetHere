@@ -20,7 +20,7 @@ const LoginForm = () => {
   // 로그인화면 진입 시, 로그아웃 로직 실행
   useEffect(() => {
     localStorage.removeItem('accessToken')
-    localStorage.removeItem('refreshToken')
+    // localStorage.removeItem('refreshToken')
     deleteCookie('accessToken', { path: '/' })
     clearUserInfo()
   }, [])

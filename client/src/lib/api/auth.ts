@@ -1,7 +1,7 @@
 //로그인, 로그아웃, 회원가입
 import { LoginForm } from '@/types/auth'
 import api from '@/lib/api/axios'
-import axios, { AxiosError } from 'axios'
+import { AxiosError } from 'axios'
 // import { setCookie } from 'cookies-next'
 
 // 로그인 axios
@@ -26,8 +26,8 @@ export const login = async ({ email, password }: LoginForm) => {
     // )
 
     // localStorage.setItem('refreshToken', refreshToken) // 이건 필요하다면 유지
-    const { refreshToken } = res.data
-    localStorage.setItem('refreshToken', refreshToken)
+    // const { refreshToken } = res.data
+    // localStorage.setItem('refreshToken', refreshToken)
 
     return { success: true }
   } catch (err: unknown) {
@@ -60,15 +60,15 @@ export const signUp = async (formData: {
 }
 
 // refreshToken API
-const rawAxios = axios.create()
-
-export const refreshAccessToken = async () => {
-  const refreshToken = localStorage.getItem('refreshToken')
-  const res = await rawAxios.post(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/refresh-token`,
-    { refreshToken }
-  )
-  const { accessToken } = res.data
-  localStorage.setItem('accessToken', accessToken)
-  return accessToken
-}
+// const rawAxios = axios.create()
+//
+// export const refreshAccessToken = async () => {
+//   const refreshToken = localStorage.getItem('refreshToken')
+//   const res = await rawAxios.post(
+//     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/refresh-token`,
+//     { refreshToken }
+//   )
+//   const { accessToken } = res.data
+//   localStorage.setItem('accessToken', accessToken)
+//   return accessToken
+// }
