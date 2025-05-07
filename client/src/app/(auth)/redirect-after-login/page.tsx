@@ -3,7 +3,7 @@
 import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 
-const RedirectAfterLogin = () => {
+const Page = () => {
   const router = useRouter()
 
   useEffect(() => {
@@ -16,4 +16,4 @@ const RedirectAfterLogin = () => {
   return <p>로그인 처리 중...</p>
 }
 
-export default RedirectAfterLogin
+export default Page
