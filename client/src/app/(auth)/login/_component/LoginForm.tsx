@@ -1,12 +1,12 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import InputField from '../../_component/InputField'
 import SubmitButton from '@/app/_component/button/SubmitButton'
 import { login } from '@/lib/api/auth'
 import { useRouter } from 'next/navigation'
-import { useUserStore } from '@/store/useUserStore'
-import { deleteCookie } from 'cookies-next'
+// import { useUserStore } from '@/store/useUserStore'
+// import { deleteCookie } from 'cookies-next'
 
 const LoginForm = () => {
   const [email, setEmail] = useState('')
@@ -15,15 +15,15 @@ const LoginForm = () => {
 
   const router = useRouter()
 
-  const { clearUserInfo } = useUserStore()
+  // const { clearUserInfo } = useUserStore()
 
   // 로그인화면 진입 시, 로그아웃 로직 실행
-  useEffect(() => {
-    localStorage.removeItem('accessToken')
-    // localStorage.removeItem('refreshToken')
-    deleteCookie('accessToken', { path: '/' })
-    clearUserInfo()
-  }, [])
+  // useEffect(() => {
+  // localStorage.removeItem('accessToken')
+  // localStorage.removeItem('refreshToken')
+  // deleteCookie('accessToken', { path: '/' })
+  // clearUserInfo()
+  // }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()

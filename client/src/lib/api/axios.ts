@@ -15,7 +15,7 @@ const api = axios.create({
 //   return config
 // })
 
-// 요청마다 accessToken 자동 삽입 > 쿠키 저장용
+// 요청마다 accessToken 자동 삽입 > 쿠키 저장용(js 전용)
 // api.interceptors.request.use(config => {
 //   const token = getCookie('accessToken') // 쿠키에서 accessToken 가져옴
 //   if (token) {
@@ -30,7 +30,7 @@ const api = axios.create({
 //   async error => {
 //     const originalRequest = error.config
 //
-//     // console.log('🧭 응답 인터셉터 진입')
+//     // console.log('응답 인터셉터 진입')
 //
 //     if (
 //       error.response?.status === 401 &&
@@ -64,7 +64,7 @@ const api = axios.create({
 //   res => res,
 //   async error => {
 //     const originalRequest = error.config
-//     // console.log('🧭 응답 인터셉터 진입')
+//     // console.log('응답 인터셉터 진입')
 //     if (
 //       error.response?.status === 401 &&
 //       error.response?.data?.errorCode === 10001 &&
