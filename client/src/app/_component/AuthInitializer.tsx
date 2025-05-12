@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from 'react'
 import { authStore } from '@/store/useAuthStore'
+import { setCookie } from 'cookies-next'
+import api from '@/lib/api/axios'
 
 export const AuthInitializer = ({
   children,
@@ -15,13 +17,16 @@ export const AuthInitializer = ({
       const token = authStore.getState().accessToken
       if (!token) {
         try {
-          const res = await fetch('/api/refresh-token', {
-            method: 'POST',
-            credentials: 'include',
+          const res = await api.post('/api/refresh-token')
+          const { accessToken } = res.data
+
+          authStore.getState().setAccessToken(accessToken)
+
+          setCookie('accessToken', accessToken, {
+            path: '/',
+            maxAge: 60 * 60,
+            sameSite: 'lax',
           })
-          const data = await res.json()
-          authStore.getState().setAccessToken(data.accessToken)
-          document.cookie = `accessToken=${data.accessToken}; path=/; max-age=3600`
         } catch {
           console.warn('refreshToken 인증 실패')
         }
