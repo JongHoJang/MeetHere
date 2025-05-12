@@ -2,10 +2,16 @@
 
 // 로그인 한 유저 정보
 import api from '@/lib/api/axios'
+import { authStore } from '@/store/useAuthStore'
 
 export const getUserUsage = async () => {
   try {
-    const res = await api.get('/api/user/usage')
+    const accessToken = authStore.getState().accessToken
+    const res = await api.get('/api/user/usage', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
     return res.data
   } catch (err) {
     console.error('사용자 정보 불러오기 실패:', err)
