@@ -58,15 +58,16 @@ export const signUp = async (formData: {
 }
 
 // refreshToken API
-// const rawAxios = axios.create()
-//
-// export const refreshAccessToken = async () => {
-//   const refreshToken = localStorage.getItem('refreshToken')
-//   const res = await rawAxios.post(
-//     `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/refresh-token`,
-//     { refreshToken }
-//   )
-//   const { accessToken } = res.data
-//   localStorage.setItem('accessToken', accessToken)
-//   return accessToken
-// }
+export const refreshAccessToken = async (): Promise<string> => {
+  try {
+    const res = await api.post(
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/refresh-token`,
+      {},
+      { withCredentials: true }
+    )
+    return res.data.accessToken
+  } catch (err) {
+    console.error('refreshToken 재발급 실패:', err)
+    throw err // 상위에서 catch 가능하도록 rethrow
+  }
+}

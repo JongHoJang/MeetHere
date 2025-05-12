@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { authStore } from '@/store/useAuthStore'
+import { refreshAccessToken } from '@/lib/api/auth'
+import { setCookie } from 'cookies-next'
 // import { refreshAccessToken } from '@/lib/api/auth'
 
 const api = axios.create({
@@ -12,26 +14,20 @@ api.interceptors.response.use(
   res => res,
   async err => {
     const originalRequest = err.config
-
-    // accessToken 만료 + 재시도 안된 요청
     if (err.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true
 
       try {
-        const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/refresh-token`,
-          {},
-          { withCredentials: true }
-        )
-        const newAccessToken = res.data.accessToken
+        const newAccessToken = await refreshAccessToken()
 
-        // 메모리에 저장 (예: Zustand)
         authStore.getState().setAccessToken(newAccessToken)
+        setCookie('accessToken', newAccessToken, {
+          path: '/',
+          maxAge: 60 * 60,
+          sameSite: 'lax',
+        })
 
-        // 쿠키에도 갱신 (SSR 보호용)
-        document.cookie = `accessToken=${newAccessToken}; path=/; max-age=3600`
-
-        // 새 accessToken 붙이고 재요청
+        originalRequest.headers = originalRequest.headers || {}
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
         return api(originalRequest)
       } catch (refreshErr) {
