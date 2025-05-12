@@ -62,8 +62,7 @@ export const refreshAccessToken = async (): Promise<string> => {
   try {
     const res = await api.post(
       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/refresh-token`,
-      {},
-      { withCredentials: true }
+      {}
     )
     return res.data.accessToken
   } catch (err) {

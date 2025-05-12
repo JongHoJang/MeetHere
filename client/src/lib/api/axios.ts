@@ -14,7 +14,11 @@ api.interceptors.response.use(
   res => res,
   async err => {
     const originalRequest = err.config
-    if (err.response?.status === 401 && !originalRequest._retry) {
+    if (
+      err.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url?.includes('/api/refresh-token')
+    ) {
       originalRequest._retry = true
 
       try {
@@ -32,6 +36,7 @@ api.interceptors.response.use(
         return api(originalRequest)
       } catch (refreshErr) {
         console.error('토큰 재발급 실패:', refreshErr)
+
         window.location.href = '/login'
         return Promise.reject(refreshErr)
       }
