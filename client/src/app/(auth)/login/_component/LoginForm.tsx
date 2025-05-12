@@ -5,8 +5,6 @@ import InputField from '../../_component/InputField'
 import SubmitButton from '@/app/_component/button/SubmitButton'
 import { login } from '@/lib/api/auth'
 import { useRouter } from 'next/navigation'
-// import { useUserStore } from '@/store/useUserStore'
-// import { deleteCookie } from 'cookies-next'
 
 const LoginForm = () => {
   const [email, setEmail] = useState('')
@@ -14,16 +12,6 @@ const LoginForm = () => {
   const [isLoading, setIsLoading] = useState(false)
 
   const router = useRouter()
-
-  // const { clearUserInfo } = useUserStore()
-
-  // 로그인화면 진입 시, 로그아웃 로직 실행
-  // useEffect(() => {
-  // localStorage.removeItem('accessToken')
-  // localStorage.removeItem('refreshToken')
-  // deleteCookie('accessToken', { path: '/' })
-  // clearUserInfo()
-  // }, [])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -33,7 +21,7 @@ const LoginForm = () => {
       if (result.success) {
         setIsLoading(false)
         console.log('로그인 성공성공!!')
-        await new Promise(res => setTimeout(res, 800))
+        // await new Promise(res => setTimeout(res, 800))
         router.replace('/main')
       } else {
         alert(result.error || '로그인에 실패했습니다.')
