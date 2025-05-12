@@ -1,13 +1,13 @@
 // // 유저 관련 api
 
 // 로그인 한 유저 정보
-import api from '@/lib/api/axios'
 import { authStore } from '@/store/useAuthStore'
+import axios from 'axios'
 
 export const getUserUsage = async () => {
   try {
     const accessToken = authStore.getState().accessToken
-    const res = await api.get('/api/user/usage', {
+    const res = await axios.get('/api/user/usage', {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
