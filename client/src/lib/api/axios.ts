@@ -1,10 +1,49 @@
 import axios from 'axios'
+import { authStore } from '@/store/useAuthStore'
 // import { refreshAccessToken } from '@/lib/api/auth'
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   withCredentials: true, // 쿠키 기반 인증 시 true 설정
 })
+
+// 응답 인터셉터 (accessToken 만료 시 자동 재발급)
+api.interceptors.response.use(
+  res => res,
+  async err => {
+    const originalRequest = err.config
+
+    // accessToken 만료 + 재시도 안된 요청
+    if (err.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true
+
+      try {
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/refresh-token`,
+          {},
+          { withCredentials: true }
+        )
+        const newAccessToken = res.data.accessToken
+
+        // 메모리에 저장 (예: Zustand)
+        authStore.getState().setAccessToken(newAccessToken)
+
+        // 쿠키에도 갱신 (SSR 보호용)
+        document.cookie = `accessToken=${newAccessToken}; path=/; max-age=3600`
+
+        // 새 accessToken 붙이고 재요청
+        originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
+        return api(originalRequest)
+      } catch (refreshErr) {
+        console.error('토큰 재발급 실패:', refreshErr)
+        window.location.href = '/login'
+        return Promise.reject(refreshErr)
+      }
+    }
+
+    return Promise.reject(err)
+  }
+)
 
 // 요청마다 accessToken 자동 삽입 > 로컬스토리지 저장용
 // api.interceptors.request.use(config => {
