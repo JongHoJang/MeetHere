@@ -74,11 +74,15 @@ export const refreshAccessToken = async (): Promise<string> => {
 // 로그아웃
 export const logout = async () => {
   try {
+    const accessToken = authStore.getState().accessToken
+
     await api.post(
       '/api/logout',
       {},
       {
-        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
       }
     )
 
