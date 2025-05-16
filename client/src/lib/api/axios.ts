@@ -34,7 +34,7 @@ api.interceptors.response.use(
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
         return api(originalRequest)
       } catch (refreshErr) {
-        console.error('토큰 재발급 실패:', refreshErr)
+        // console.error('토큰 재발급 실패:', refreshErr)
         authStore.getState().setAccessToken(null)
         deleteCookie('accessToken')
 

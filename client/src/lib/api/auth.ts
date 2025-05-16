@@ -3,7 +3,7 @@ import { LoginForm } from '@/types/auth'
 import api from '@/lib/api/axios'
 import { AxiosError } from 'axios'
 import { authStore } from '@/store/useAuthStore'
-import { setCookie } from 'cookies-next'
+import { deleteCookie, setCookie } from 'cookies-next'
 
 // 로그인 axios
 export const login = async ({ email, password }: LoginForm) => {
@@ -66,7 +66,30 @@ export const refreshAccessToken = async (): Promise<string> => {
     )
     return res.data.accessToken
   } catch (err) {
-    console.error('refreshToken 재발급 실패:', err)
+    // console.error('refreshToken 재발급 실패:', err)
     throw err // 상위에서 catch 가능하도록 rethrow
+  }
+}
+
+// 로그아웃
+export const logout = async () => {
+  try {
+    await api.post(
+      '/api/logout',
+      {},
+      {
+        withCredentials: true,
+      }
+    )
+
+    authStore.getState().setAccessToken(null)
+    deleteCookie('accessToken', { path: '/' })
+
+    return { success: true }
+  } catch (err: unknown) {
+    console.log(err)
+    return {
+      success: false,
+    }
   }
 }

@@ -1,7 +1,6 @@
 import React from 'react'
-import { deleteCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
-import { authStore } from '@/store/useAuthStore'
+import { logout } from '@/lib/api/auth'
 
 interface Props {
   modalTitle: string
@@ -16,12 +15,15 @@ export default function LogoutModal({
 }: Props) {
   const router = useRouter()
 
-  const handleLogout = () => {
-    authStore.getState().clearAccessToken?.()
-    deleteCookie('accessToken')
+  const handleLogout = async () => {
+    const logoutResult = await logout()
 
-    onClose() // 모달 먼저 닫고
-    router.push('/login') // 페이지 이동
+    if (logoutResult.success) {
+      onClose() // 모달 닫기
+      router.push('/login')
+    } else {
+      alert('로그아웃에 실패하였습니다. 다시 시도해주세요')
+    }
   }
 
   return (
