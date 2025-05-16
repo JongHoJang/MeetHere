@@ -24,7 +24,6 @@ export const AuthInitializer = ({
 
           setCookie('accessToken', accessToken, {
             path: '/',
-            // maxAge: 60 * 60,
             sameSite: 'lax',
           })
         } catch {
