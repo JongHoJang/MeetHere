@@ -23,7 +23,7 @@ export const login = async ({ email, password }: LoginForm) => {
     // 쿠키 저장 (ssr 대응 일반 쿠키)
     setCookie('accessToken', accessToken, {
       path: '/',
-      maxAge: 60 * 60, // 1시간
+      // maxAge: 60 * 60,
       sameSite: 'lax',
     })
 

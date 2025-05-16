@@ -21,7 +21,6 @@ const LoginForm = () => {
       if (result.success) {
         setIsLoading(false)
         console.log('로그인 성공성공!!')
-        // await new Promise(res => setTimeout(res, 800))
         router.replace('/main')
       } else {
         alert(result.error || '로그인에 실패했습니다.')

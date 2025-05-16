@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { authStore } from '@/store/useAuthStore'
-import { setCookie } from 'cookies-next'
+import { deleteCookie, setCookie } from 'cookies-next'
 import api from '@/lib/api/axios'
 
 export const AuthInitializer = ({
@@ -24,11 +24,13 @@ export const AuthInitializer = ({
 
           setCookie('accessToken', accessToken, {
             path: '/',
-            maxAge: 60 * 60,
+            // maxAge: 60 * 60,
             sameSite: 'lax',
           })
         } catch {
           console.warn('refreshToken 인증 실패')
+          authStore.getState().setAccessToken(null)
+          deleteCookie('accessToken')
         }
       }
       setChecked(true)

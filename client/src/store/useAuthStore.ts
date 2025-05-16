@@ -2,7 +2,7 @@ import { create } from 'zustand'
 
 type AuthStore = {
   accessToken: string | null
-  setAccessToken: (token: string) => void
+  setAccessToken: (token: string | null) => void
   clearAccessToken: () => void
 }
 

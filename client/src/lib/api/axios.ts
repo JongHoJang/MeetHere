@@ -1,11 +1,11 @@
 import axios from 'axios'
 import { authStore } from '@/store/useAuthStore'
 import { refreshAccessToken } from '@/lib/api/auth'
-import { setCookie } from 'cookies-next'
+import { deleteCookie, setCookie } from 'cookies-next'
 
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  withCredentials: true, // 쿠키 기반 인증 시 true 설정
+  withCredentials: true,
 })
 
 // 응답 인터셉터 (accessToken 만료 시 자동 재발급)
@@ -26,7 +26,7 @@ api.interceptors.response.use(
         authStore.getState().setAccessToken(newAccessToken)
         setCookie('accessToken', newAccessToken, {
           path: '/',
-          maxAge: 60 * 60,
+          // maxAge: 60 * 60,
           sameSite: 'lax',
         })
 
@@ -35,6 +35,8 @@ api.interceptors.response.use(
         return api(originalRequest)
       } catch (refreshErr) {
         console.error('토큰 재발급 실패:', refreshErr)
+        authStore.getState().setAccessToken(null)
+        deleteCookie('accessToken')
 
         window.location.href = '/login'
         return Promise.reject(refreshErr)
