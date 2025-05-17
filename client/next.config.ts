@@ -5,10 +5,13 @@ const baseApiUrl =
     ? 'https://manchunggrouproom.duckdns.org/dev'
     : 'https://manchunggrouproom.duckdns.org'
 
+console.log('🔍 baseApiUrl →', baseApiUrl)
+console.log('🔍 API_STAGE →', apiStage)
+console.log('🔎 개발용(프리뷰)?', process.env.VERCEL_ENV === 'preview')
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async rewrites() {
-    console.log('API_STAGE:', apiStage) // 로그로 실제 적용 확인 가능
     return [
       {
         source: '/api/:path*',
