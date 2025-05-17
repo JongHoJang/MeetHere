@@ -58,16 +58,24 @@ export const signUp = async (formData: {
 }
 
 // refreshToken API
+// export const refreshAccessToken = async (): Promise<string> => {
+//   try {
+//     const res = await api.post(
+//       `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/refresh-token`,
+//       {}
+//     )
+//     return res.data.accessToken
+//   } catch (err) {
+//     // console.error('refreshToken 재발급 실패:', err)
+//     throw err // 상위에서 catch 가능하도록 rethrow
+//   }
+// }
 export const refreshAccessToken = async (): Promise<string> => {
   try {
-    const res = await api.post(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/refresh-token`,
-      {}
-    )
+    const res = await api.post('/api/refresh-token')
     return res.data.accessToken
   } catch (err) {
-    // console.error('refreshToken 재발급 실패:', err)
-    throw err // 상위에서 catch 가능하도록 rethrow
+    throw err
   }
 }
 
