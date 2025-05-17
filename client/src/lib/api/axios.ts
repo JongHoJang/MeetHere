@@ -3,8 +3,13 @@ import { authStore } from '@/store/useAuthStore'
 import { refreshAccessToken } from '@/lib/api/auth'
 import { deleteCookie, setCookie } from 'cookies-next'
 
+// const api = axios.create({
+//   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+//   withCredentials: true,
+// })
+
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  baseURL: '/api',
   withCredentials: true,
 })
 
