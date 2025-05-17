@@ -9,7 +9,7 @@ import { deleteCookie, setCookie } from 'cookies-next'
 export const login = async ({ email, password }: LoginForm) => {
   try {
     const res = await api.post(
-      '/login',
+      '/api/login',
       { email, password },
       {
         withCredentials: true, // 쿠키 포함 필수
@@ -72,7 +72,7 @@ export const signUp = async (formData: {
 // }
 export const refreshAccessToken = async (): Promise<string> => {
   try {
-    const res = await api.post('/refresh-token')
+    const res = await api.post('/api/refresh-token')
     return res.data.accessToken
   } catch (err) {
     throw err

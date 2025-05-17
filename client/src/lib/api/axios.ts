@@ -3,13 +3,8 @@ import { authStore } from '@/store/useAuthStore'
 import { refreshAccessToken } from '@/lib/api/auth'
 import { deleteCookie, setCookie } from 'cookies-next'
 
-// const api = axios.create({
-//   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
-//   withCredentials: true,
-// })
-
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   withCredentials: true,
 })
 
@@ -21,7 +16,7 @@ api.interceptors.response.use(
     if (
       err.response?.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url?.includes('/refresh-token')
+      !originalRequest.url?.includes('/api/refresh-token')
     ) {
       originalRequest._retry = true
 

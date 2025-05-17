@@ -17,7 +17,7 @@ export const AuthInitializer = ({
       const token = authStore.getState().accessToken
       if (!token) {
         try {
-          const res = await api.post('/refresh-token')
+          const res = await api.post('/api/refresh-token')
           const { accessToken } = res.data
 
           authStore.getState().setAccessToken(accessToken)
