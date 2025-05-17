@@ -6,8 +6,8 @@ module.exports = {
       {
         source: '/api/:path*',
         destination: isProd
-          ? 'https://manchunggrouproom.duckdns.org/:path*'
-          : 'https://manchunggrouproom.duckdns.org/dev/:path*',
+          ? 'https://manchunggrouproom.duckdns.org/api/:path*'
+          : 'https://manchunggrouproom.duckdns.org/dev/api/:path*',
       },
     ]
   },

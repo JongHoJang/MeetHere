@@ -21,7 +21,7 @@ api.interceptors.response.use(
     if (
       err.response?.status === 401 &&
       !originalRequest._retry &&
-      !originalRequest.url?.includes('/api/refresh-token')
+      !originalRequest.url?.includes('/refresh-token')
     ) {
       originalRequest._retry = true
 

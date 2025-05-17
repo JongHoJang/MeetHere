@@ -72,7 +72,7 @@ export const signUp = async (formData: {
 // }
 export const refreshAccessToken = async (): Promise<string> => {
   try {
-    const res = await api.post('/api/refresh-token')
+    const res = await api.post('/refresh-token')
     return res.data.accessToken
   } catch (err) {
     throw err
