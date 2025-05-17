@@ -1,4 +1,4 @@
-const apiStage = process.env.API_STAGE // 서버 환경변수로 분기
+const apiStage = process.env.API_STAGE
 
 const baseApiUrl =
   apiStage === 'dev'
@@ -8,6 +8,7 @@ const baseApiUrl =
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   async rewrites() {
+    console.log('API_STAGE:', apiStage) // 로그로 실제 적용 확인 가능
     return [
       {
         source: '/api/:path*',
