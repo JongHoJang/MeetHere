@@ -9,7 +9,7 @@ import { deleteCookie, setCookie } from 'cookies-next'
 export const login = async ({ email, password }: LoginForm) => {
   try {
     const res = await api.post(
-      '/api/login',
+      '/login',
       { email, password },
       {
         withCredentials: true, // 쿠키 포함 필수
