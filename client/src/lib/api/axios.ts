@@ -11,7 +11,7 @@ import { deleteCookie, setCookie } from 'cookies-next'
 
 // 프록시 설정
 const api = axios.create({
-  baseURL: '/', // 기존 환경변수 대신 프론트 주소에 상대 경로
+  baseURL: '',
   withCredentials: true,
 })
 
