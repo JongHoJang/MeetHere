@@ -3,8 +3,15 @@ import { authStore } from '@/store/useAuthStore'
 import { refreshAccessToken } from '@/lib/api/auth'
 import { deleteCookie, setCookie } from 'cookies-next'
 
+// 환경변수용
+// const api = axios.create({
+//   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+//   withCredentials: true,
+// })
+
+// 프록시 설정
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  baseURL: '/api', // 기존 환경변수 대신 프론트 주소에 상대 경로
   withCredentials: true,
 })
 
