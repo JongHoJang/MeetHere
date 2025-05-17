@@ -1,13 +1,18 @@
-const isDev = process.env.NODE_ENV !== 'production'
+// next.config.js
+require('dotenv').config()
 
+const baseApiUrl =
+  process.env.NODE_ENV === 'development'
+    ? 'https://manchunggrouproom.duckdns.org/dev'
+    : 'https://manchunggrouproom.duckdns.org'
+
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   async rewrites() {
     return [
       {
         source: '/api/:path*',
-        destination: isDev
-          ? 'https://manchunggrouproom.duckdns.org/dev/api/:path*' // 개발용
-          : 'https://manchunggrouproom.duckdns.org/api/:path*', // 배포용
+        destination: `${baseApiUrl}/api/:path*`,
       },
     ]
   },
