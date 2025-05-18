@@ -19,7 +19,7 @@ export default function SuccessModalContent({ onClose, roomName }: Props) {
         {roomName}에 신청이 완료되었습니다.
       </h2>
       <div className="mb-4 w-[320px] mx-auto">
-        <p className="mb-4">월요일 21:11에 배정이 완료됩니다.</p>
+        <p className="mb-4">월요일 21:01에 배정이 완료됩니다.</p>
       </div>
       <div className="w-full max-w-[300px] mx-auto">
         <div className="flex flex-col mt-5">
