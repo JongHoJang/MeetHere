@@ -49,8 +49,9 @@ const getStatusMessage = (
     case 'LOSER':
       return (
         <>
-          아쉽게도 이번에는 당첨되지 않았습니다.{' '}
-          <br className="block sm:hidden" />
+          아쉽게도 이번에는{' '}
+          <span className="font-bold text-red-500">{roomName}</span> 소그룹실에
+          당첨되지 않았습니다. <br className="block sm:hidden" />
           다음 기회를 노려보세요! 💪
         </>
       )
