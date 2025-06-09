@@ -12,7 +12,8 @@ import { RefreshCw } from 'lucide-react'
 // 상태에 따른 메시지 분기처리
 const getStatusMessage = (
   status: string | undefined,
-  roomName: string | undefined
+  roomName: string | undefined,
+  allocatedRoomName?: string | undefined
 ) => {
   switch (status) {
     case 'NOT_APPLIED':
@@ -37,15 +38,29 @@ const getStatusMessage = (
           발표일을 기다려 주세요!
         </>
       )
-    case 'WINNER':
-      return (
+    case 'WINNER': {
+      const isSameRoom = roomName === allocatedRoomName
+      return isSameRoom ? (
         <>
           🎉 축하드립니다! {''}
           <span className="font-bold text-red-500">{roomName}</span> 소그룹실에
           당첨되셨어요. <br className="block sm:hidden" />
           사용 일정을 확인해 주세요.
         </>
+      ) : (
+        <>
+          🎉 축하드립니다! <br className="block sm:hidden" />
+          신청하신{' '}
+          <span className="font-bold text-main-d-black">{roomName}</span>{' '}
+          소그룹실에는 당첨되시지 않았지만
+          <br className="block sm:hidden" />
+          <span className="font-bold text-red-500">
+            {allocatedRoomName}
+          </span>{' '}
+          소그룹실에 추가 배정되셨어요!
+        </>
       )
+    }
     case 'LOSER':
       return (
         <>
