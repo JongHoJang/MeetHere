@@ -23,7 +23,7 @@ export const UserProvider = ({
   const contextValue: UserContextType = {
     ...userInfo,
     accessToken,
-    setAccessToken, // ✅ setter 포함!
+    setAccessToken, // setter 포함!
   }
 
   return (

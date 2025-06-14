@@ -3,13 +3,21 @@ export interface LoginForm {
   password: string
 }
 
+export type ApplicationStatus =
+  | 'BEFORE_APPLICATION'
+  | 'AFTER_APPLICATION'
+  | 'NOT_APPLIED'
+  | 'WINNER'
+  | 'LOSER'
+
 export interface UserInfo {
   userName: string
   applicationDeadline: string
   announcementTime: string
   useDate: string
-  status: 'BEFORE_APPLICATION' | 'AFTER_APPLICATION' | 'APPROVED' | 'REJECTED'
-  roomName: string | undefined
+  status: ApplicationStatus
+  roomName: string
+  allocatedRoomName?: string
 }
 
 export interface UserContextType extends UserInfo {
