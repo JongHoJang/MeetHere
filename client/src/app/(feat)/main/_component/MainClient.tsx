@@ -12,7 +12,8 @@ import { RefreshCw } from 'lucide-react'
 // 상태에 따른 메시지 분기처리
 const getStatusMessage = (
   status: string | undefined,
-  roomName: string | undefined
+  roomName: string | undefined,
+  allocatedRoomName?: string | undefined
 ) => {
   switch (status) {
     case 'NOT_APPLIED':
@@ -37,15 +38,27 @@ const getStatusMessage = (
           발표일을 기다려 주세요!
         </>
       )
-    case 'WINNER':
-      return (
+    case 'WINNER': {
+      const isSameRoom = roomName === allocatedRoomName
+      return isSameRoom ? (
         <>
           🎉 축하드립니다! {''}
-          <span className="font-bold text-red-500">{roomName}</span> 소그룹실에
+          <span className="font-bold text-red-500">{roomName}</span> 에
           당첨되셨어요. <br className="block sm:hidden" />
           사용 일정을 확인해 주세요.
         </>
+      ) : (
+        <>
+          🎉 축하드립니다! <br className="block sm:hidden" />
+          신청하신{' '}
+          <span className="font-bold text-main-d-black">{roomName}</span>에는
+          아쉽게 탈락했지만, {''}
+          <br className="block sm:hidden" />
+          <span className="font-bold text-red-500">{allocatedRoomName}</span> 에
+          추가 배정되셨어요!
+        </>
       )
+    }
     case 'LOSER':
       return (
         <>
@@ -96,12 +109,13 @@ const getButtonProps = (status: string | undefined) => {
 }
 const MainClient = () => {
   const { userInfo } = useUserStore()
+  // const { isLoading } = useUserInfoQuery()
   const router = useRouter()
 
-  const { label, path, disabled, title } = getButtonProps(userInfo?.status)
-
   if (!userInfo) return <LoadingSpinner />
-  dayjs.locale('ko')
+
+  console.log(userInfo?.allocatedRoomName)
+  const { label, path, disabled, title } = getButtonProps(userInfo.status)
 
   return (
     <div className="pt-10 pb-20">
@@ -213,7 +227,11 @@ const MainClient = () => {
                 <div className="hidden md:block">
                   <div className="font-bold text-sm mb-1">{title}</div>
                   <div>
-                    {getStatusMessage(userInfo?.status, userInfo?.roomName)}
+                    {getStatusMessage(
+                      userInfo?.status,
+                      userInfo?.roomName,
+                      userInfo?.allocatedRoomName
+                    )}
                   </div>
                 </div>
               </div>
@@ -224,7 +242,11 @@ const MainClient = () => {
               <div className=" mt-4 shadow w-full bg-[#f5f5f5] p-4 py-6 rounded-[4px]">
                 <div className="font-bold text-sm mb-2">{title}</div>
                 <div>
-                  {getStatusMessage(userInfo?.status, userInfo?.roomName)}
+                  {getStatusMessage(
+                    userInfo?.status,
+                    userInfo?.roomName,
+                    userInfo?.allocatedRoomName
+                  )}
                 </div>
               </div>
             </div>
