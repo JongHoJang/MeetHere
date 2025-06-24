@@ -61,3 +61,45 @@ export const refreshAccessToken = async () => {
   localStorage.setItem('accessToken', accessToken)
   return accessToken
 }
+
+// 이메일 찾기
+export const findEmail = async (payload: {
+  name: string
+  birthday: string
+  churchMemberId: number
+  communityCode: string
+}) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/find-email`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }
+  )
+
+  if (!res.ok) throw await res.json()
+  return res.json()
+}
+
+// 비밀번호 변경
+export const changePasswordWithVerification = async (payload: {
+  name: string
+  birthday: string
+  churchMemberId: number
+  communityCode: string
+  email: string
+  password: string
+}) => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/change-password`,
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    }
+  )
+
+  if (!res.ok) throw await res.json()
+  return res.json()
+}
