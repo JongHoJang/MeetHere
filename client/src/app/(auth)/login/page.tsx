@@ -1,6 +1,7 @@
 import LoginForm from '@/app/(auth)/login/_component/LoginForm'
 import SignUpButton from '@/app/(auth)/login/_component/SignUpButton'
 import LoginPageContext from '@/app/(auth)/login/_component/LoginPageContext'
+import FindIdPwButton from '@/app/(auth)/login/_component/FindIdPwButton'
 
 const LoginPage = async () => {
   return (
@@ -11,6 +12,7 @@ const LoginPage = async () => {
           <div className="flex flex-col mx-auto gap-4 mt-10 sm:mt-14 max-w-[380px]">
             <LoginForm />
             <SignUpButton />
+            <FindIdPwButton />
           </div>
         </div>
       </div>
