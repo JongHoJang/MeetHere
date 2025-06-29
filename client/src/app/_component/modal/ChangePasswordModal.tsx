@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { useRouter } from 'next/navigation'
-import SignUpButton from '@/app/_component/button/SignUpButton'
+import MoveButton from '@/app/_component/button/MoveButton'
 
 interface Props {
   modalTitle: string
@@ -25,7 +25,7 @@ export default function ChangePasswordModal({
       <h2 className="text-lg font-bold mb-2">{modalTitle}</h2>
       <p className="mb-4">{modalDescription}</p>
 
-      <SignUpButton buttonLabel="로그인하러 가기" onClick={handleMoveToLogin} />
+      <MoveButton buttonLabel="로그인하러 가기" onClick={handleMoveToLogin} />
     </div>
   )
 }
