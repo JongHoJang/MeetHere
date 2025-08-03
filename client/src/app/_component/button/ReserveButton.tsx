@@ -8,6 +8,7 @@ interface ReserveButtonProps {
   buttonLabel: string
   roomId?: number | null
   roomName?: string | null
+  needExtraRoom?: boolean
   onClick?: () => void // 모달 닫기
   onSuccess?: () => void // 성공 시 처리
   onFail?: () => void // 실패 시 처리
@@ -16,6 +17,7 @@ interface ReserveButtonProps {
 const ReserveButton: React.FC<ReserveButtonProps> = ({
   buttonLabel,
   roomId,
+  needExtraRoom = false,
   onClick,
   onSuccess,
   onFail,
@@ -27,7 +29,7 @@ const ReserveButton: React.FC<ReserveButtonProps> = ({
     setIsLoading(true)
 
     try {
-      await reservationRoom(roomId)
+      await reservationRoom(roomId, needExtraRoom)
       // console.log('예약 성공:', data)
       onClick?.()
       onSuccess?.()

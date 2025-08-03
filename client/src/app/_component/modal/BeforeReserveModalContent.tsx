@@ -1,34 +1,52 @@
-import React from 'react'
+'use client'
+
+import React, { useState } from 'react'
 import ReserveButton from '@/app/_component/button/ReserveButton'
 
 interface Props {
   modalTitle: string
   modalDescription: string
-  onClose: () => void
+  onCloseAction: () => void
+  onSuccessAction: () => void
+  onFailAction: () => void
   roomId?: number | null
   roomName?: string | null
-  onSuccess: () => void
-  onFail: () => void
 }
 
 export default function BeforeReserveModalContent({
   modalTitle,
   modalDescription,
-  onClose,
+  onCloseAction,
+  onSuccessAction,
+  onFailAction,
   roomId,
   roomName,
-  onSuccess,
-  onFail,
 }: Props) {
+  const [needExtraRoom, setNeedExtraRoom] = useState(false)
+
   const handleClose = () => {
-    onClose()
+    onCloseAction()
   }
 
   return (
     <>
       <div className="text-center">
-        <h2 className="text-xl font-bold mb-2">{modalTitle}</h2>
+        <h2 className="text-xl font-bold">{modalTitle}</h2>
         <p className="mb-4">{modalDescription}</p>
+
+        {/*체크박스*/}
+        <div className="flex items-center justify-center mb-4 ">
+          <input
+            type="checkbox"
+            id="needExtraRoom"
+            checked={needExtraRoom}
+            onChange={e => setNeedExtraRoom(e.target.checked)}
+            className="w-5 h-5"
+          />
+          <label htmlFor="needExtraRoom" className="text-sm ml-1">
+            미당첨 시, 남은 소그룹실에 추가 배정해주세요.
+          </label>
+        </div>
 
         {/* 버튼 컨테이너 */}
         {/* 신청하기 버튼 */}
@@ -37,9 +55,10 @@ export default function BeforeReserveModalContent({
             buttonLabel="신청하기"
             roomId={roomId}
             roomName={roomName}
-            onClick={onClose}
-            onSuccess={onSuccess}
-            onFail={onFail}
+            needExtraRoom={needExtraRoom}
+            onClick={onCloseAction}
+            onSuccess={onSuccessAction}
+            onFail={onFailAction}
           />
         </div>
 

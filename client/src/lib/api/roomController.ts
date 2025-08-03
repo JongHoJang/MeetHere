@@ -21,10 +21,14 @@ export const usingRoomUserList = async () => {
 }
 
 // 방 예약 api
-export const reservationRoom = async (roomId: number) => {
+export const reservationRoom = async (
+  roomId: number,
+  needExtraRoom: boolean
+) => {
   const res = await api.post('/api/room/reserve', null, {
     params: {
       roomId,
+      needExtraRoom,
     },
   })
   return res.data
