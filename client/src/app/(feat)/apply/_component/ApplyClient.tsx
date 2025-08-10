@@ -104,12 +104,12 @@ const Apply = () => {
           modalDescription="예약 후에는 변경이 어렵습니다."
           roomId={selectedRoom?.roomId}
           roomName={selectedRoom?.name}
-          onClose={() => setIsNormalModalOpen(false)}
-          onSuccess={() => {
+          onCloseAction={() => setIsNormalModalOpen(false)}
+          onSuccessAction={() => {
             setIsNormalModalOpen(false)
             setIsSuccessModalOpen(true)
           }}
-          onFail={() => {
+          onFailAction={() => {
             setIsNormalModalOpen(false)
             setIsFailModalOpen(true)
           }}
