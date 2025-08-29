@@ -35,17 +35,20 @@ export default function BeforeReserveModalContent({
         <p className="mb-4">{modalDescription}</p>
 
         {/*체크박스*/}
-        <div className="flex items-center justify-center mb-4 ">
+        <div className="flex justify-center mb-4 ">
           <input
             type="checkbox"
             id="needExtraRoom"
             checked={needExtraRoom}
             onChange={e => setNeedExtraRoom(e.target.checked)}
-            className="w-5 h-5"
+            className="w-5 h-5 "
           />
-          <label htmlFor="needExtraRoom" className="text-sm ml-1">
-            미당첨 시, 남은 소그룹실에 추가 배정해주세요.
-          </label>
+          <div className="text-sm">
+            <label htmlFor="needExtraRoom" className="text-sm ml-1">
+              미당첨 시, 남은 소그룹실에 추가 배정해주세요{' '}
+            </label>
+            <div>(야외파구스 제외)</div>
+          </div>
         </div>
 
         {/* 버튼 컨테이너 */}
