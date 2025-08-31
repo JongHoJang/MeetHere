@@ -18,7 +18,7 @@ const Footer = async () => {
           </a>
           /
           <a
-            href="https://walnut-hose-a93.notion.site/1e3ebd82d49180248ab0e4ca00f662b3?v=1e3ebd82d4918078ae0a000c1496da0a&pvs=4"
+            href="https://relic-stone-f08.notion.site/2606f7d1cf0780e1afc0d35a81248911"
             className="text-blue-300 underline"
             target="_blank"
             rel="noopener noreferrer"

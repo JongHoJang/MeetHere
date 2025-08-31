@@ -47,7 +47,7 @@ export default function BeforeReserveModalContent({
             <label htmlFor="needExtraRoom" className="text-sm ml-1">
               미당첨 시, 남은 소그룹실에 추가 배정해주세요{' '}
             </label>
-            <div>(야외파구스 제외)</div>
+            <div>(가든파구스 제외)</div>
           </div>
         </div>
 
