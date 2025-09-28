@@ -282,14 +282,14 @@ const MainClient = () => {
         </button>
 
         {/* 당첨자 확인 버튼 > 추첨 이후에만 제공됨*/}
-        {title === '당첨 내역' && (
-          <button
-            className="h-[60px] min-w-[120px] md:w-[150px] rounded-[4px] text-white text-base md:text-lg font-bold transition-colors duration-200 bg-main-d-black hover:bg-[#444]"
-            onClick={() => router.push('/check-winner')}
-          >
-            당첨자 확인
-          </button>
-        )}
+        {/*{title === '당첨 내역' && (*/}
+        {/*  <button*/}
+        {/*    className="h-[60px] min-w-[120px] md:w-[150px] rounded-[4px] text-white text-base md:text-lg font-bold transition-colors duration-200 bg-main-d-black hover:bg-[#444]"*/}
+        {/*    onClick={() => router.push('/check-winner')}*/}
+        {/*  >*/}
+        {/*    당첨자 확인*/}
+        {/*  </button>*/}
+        {/*)}*/}
       </div>
     </div>
   )
