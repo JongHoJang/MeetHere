@@ -10,12 +10,13 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/main', request.url))
   }
 
-  // 2. 비로그인 상태로 접근하면 로그인으로 리디렉션 > login 으로
+  // 2. 비로그인 상태로 접근하면 로그인으로 리디렉션
   const protectedPaths = [
     '/main',
     '/apply',
     '/application-overview',
     '/check-winner',
+    '/dashboard', // 로그인만 체크, 권한은 클라이언트에서
   ]
   const isProtected = protectedPaths.some(path => pathname.startsWith(path))
 
@@ -23,7 +24,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
-  // 통과
+  // dashboard 권한 체크는 클라이언트에서 처리
   return NextResponse.next()
 }
 
@@ -35,5 +36,6 @@ export const config = {
     '/check-winner/:path*',
     '/login/:path*',
     '/signup/:path*',
+    '/dashboard/:path*',
   ],
 }

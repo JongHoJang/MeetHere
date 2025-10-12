@@ -1,6 +1,7 @@
 import React from 'react'
 import { deleteCookie } from 'cookies-next'
 import { useRouter } from 'next/navigation'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface Props {
   modalTitle: string
@@ -14,11 +15,15 @@ export default function LogoutModal({
   onClose,
 }: Props) {
   const router = useRouter()
+  const queryClient = useQueryClient()
 
   const handleLogout = () => {
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
     deleteCookie('accessToken', { path: '/' })
+
+    // React Query 캐시 초기화
+    queryClient.clear() // 모든 쿼리 캐시 삭제
 
     onClose() // 모달 먼저 닫고
     router.push('/login') // 페이지 이동
