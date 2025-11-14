@@ -13,6 +13,7 @@ export type ApplicationStatus =
 export interface UserInfo {
   userName: string
   applicationDeadline: string
+  applicationStart: string
   announcementTime: string
   useDate: string
   status: ApplicationStatus

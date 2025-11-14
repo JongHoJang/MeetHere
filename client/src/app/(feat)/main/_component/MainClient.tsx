@@ -150,27 +150,28 @@ const MainClient = () => {
                 {/*신청마감*/}
                 <div className="flex md:flex-row flex-col justify-between gap-4 md:gap-0">
                   <div className="flex w-full md:w-[150px] md:justify-between">
-                    <div className="flex flex-row md:flex-col gap-4 md:w-[150px] md:gap-0">
-                      <div className="font-bold text-sm min-w-[70px] md:mb-1 my-auto">
+                    <div className="flex flex-row md:flex-col items-start gap-4 md:w-[150px] md:gap-0">
+                      <div className="font-bold text-sm min-w-[70px] md:mb-1">
                         신청 기간
                       </div>
+
                       <span className="inline-block w-full min-w-[100px] md:w-[150px]">
                         <span>
-                          {/*{userInfo?.applicationDeadline.split('T')[0]} (월)*/}
+                          {dayjs(userInfo?.applicationStart).format(
+                            'MM/DD (주일)'
+                          )}{' '}
+                          <span className="font-bold">19:00 </span>~
+                          <span className="block"></span>{' '}
                           {dayjs(userInfo?.applicationDeadline).format(
-                            'MM-DD (ddd)'
-                          )}
-                        </span>
-                      </span>
-
-                      <span className="inline-block w-full md:w-[150px]">
-                        00:00 ~{' '}
-                        <span className="font-bold">
-                          {userInfo?.applicationDeadline
-                            .split('T')[1]
-                            .split(':')
-                            .slice(0, 2)
-                            .join(':')}
+                            'MM/DD (월)'
+                          )}{' '}
+                          <span className="font-bold">
+                            {userInfo?.applicationDeadline
+                              .split('T')[1]
+                              .split(':')
+                              .slice(0, 2)
+                              .join(':')}
+                          </span>
                         </span>
                       </span>
                     </div>
@@ -180,14 +181,14 @@ const MainClient = () => {
                   <div className="flex-row md:flex-col w-full md:w-[150px]">
                     <div className="flex flex-row gap-4 md:flex-col md:w-[150px] md:gap-0">
                       {' '}
-                      <div className="font-bold text-sm min-w-[70px] md:mb-1 my-auto">
+                      <div className="font-bold text-sm min-w-[70px] md:mb-1">
                         발표 일시
                       </div>
                       <span className="inline-block w-full min-w-[100px] md:w-[150px]">
                         <span>
                           {/*{userInfo?.announcementTime.split('T')[0]} (월)*/}
                           {dayjs(userInfo?.announcementTime).format(
-                            'MM-DD (ddd)'
+                            'MM/DD (월)'
                           )}
                         </span>
                       </span>
@@ -207,11 +208,11 @@ const MainClient = () => {
                   <div className="flex-row md:flex-col w-full md:w-[150px]">
                     <div className="flex flex-row gap-4 md:flex-col md:w-[150px] md:gap-0">
                       {' '}
-                      <div className="font-bold text-sm min-w-[70px] md:mb-1 my-auto">
+                      <div className="font-bold text-sm min-w-[70px] md:mb-1">
                         사용일
                       </div>
                       <span className="inline-block w-full min-w-[100px] md:w-[150px]">
-                        {dayjs(userInfo?.useDate).format('MM-DD (주일)')}
+                        {dayjs(userInfo?.useDate).format('MM/DD (주일)')}
                       </span>
                       <span className="inline-block w-full md:w-[150px]">
                         예배 후 ~<span className="font-bold">18:00</span>
